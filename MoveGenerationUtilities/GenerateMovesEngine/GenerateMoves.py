@@ -1,15 +1,11 @@
-from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
-from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
-from DebugUtilities.GameDependency.PieceDependency.PieceNameDependency import PieceName
-from DebugUtilities.GameDependency.PlayerDependency.PlayerSideDependency import PlayerSide
 from FenUtilities.FenModel import Fen
 from MoveGenerationUtilities.Const import before_top_edge, before_bottom_edge
 from MoveGenerationUtilities.EncryptionDependency.MoveEncryptions.EncodeMove import encode_move
 from MoveGenerationUtilities.GenerateMovesEngine.GenerateMovesDependencies import *
 from MoveGenerationUtilities.GenerateMovesEngine.MovesModel import MoveDependencyModel
-from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import unsigned, move_bit
+from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import move_bit
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask
 
 
@@ -95,25 +91,25 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
                                 double_push_flag=True,
                                 enpassant_flag=False,
                                 castle_flag=False))
-            # ===================================enpassant move===================================
-            # if enpassant exists
-            if en_passant_move != Positions.OUT_OF_BOUNDS:
-                possible_opponent_position: Positions = Positions(en_passant_move.value + 8)
-                # create mask of opponent position w.r.t enpassant square
-                possible_opponent_position_mask: int = square_bitmask[possible_opponent_position.value]
-                # if piece exists at location and difference btw opponent and player piece position is 1
-                if (possible_opponent_position_mask & move_model.opponent_pieces[
-                    PieceName.PAWN.value]) and (
-                        abs(pawn_position.value - possible_opponent_position.value) == 1):
-                    # add enpassant move into the list
-                    pawn_moves.append(
-                        encode_move(source_square=pawn_position,
-                                    target_square=en_passant_move,
-                                    piece_name=PieceName.PAWN,
-                                    promotion_piece_name=PieceName.NONE,
-                                    capture_flag=False,
-                                    double_push_flag=False,
-                                    enpassant_flag=True,
-                                    castle_flag=False))
+        # ===================================enpassant move===================================
+        # if enpassant exists
+        if en_passant_move != Positions.OUT_OF_BOUNDS:
+            possible_opponent_position: Positions = Positions(en_passant_move.value - 8)
+            # create mask of opponent position w.r.t enpassant square
+            possible_opponent_position_mask: int = square_bitmask[possible_opponent_position.value]
+            # if piece exists at location and difference btw opponent and player piece position is 1
+            if (possible_opponent_position_mask & move_model.opponent_pieces[
+                PieceName.PAWN.value]) and (
+                    abs(pawn_position.value - possible_opponent_position.value) == 1):
+                # add enpassant move into the list
+                pawn_moves.append(
+                    encode_move(source_square=pawn_position,
+                                target_square=en_passant_move,
+                                piece_name=PieceName.PAWN,
+                                promotion_piece_name=PieceName.NONE,
+                                capture_flag=False,
+                                double_push_flag=False,
+                                enpassant_flag=True,
+                                castle_flag=False))
         pawn &= pawn - 1
     return pawn_moves

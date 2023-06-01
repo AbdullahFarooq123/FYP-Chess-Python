@@ -59,15 +59,36 @@ def print_game_board(white_state: int, white_pieces: list, black_state: int, bla
     for i, file in zip(range(8), range(8, 0, -1)):
         print(file, end='\t')
         for j in range(8):
-            current_square_mask = square_bitmask[i * 8 + j]
+            current_square_mask = square_bitmask[63 - (i * 8 + j)]
             if current_square_mask & white_state:
                 print(white_pieces_char[int((white_pieces & current_square_mask).nonzero()[0])], end='  ')
             elif current_square_mask & black_state:
                 print(black_pieces_char[int((black_pieces & current_square_mask).nonzero()[0])], end='  ')
             else:
-                print(' ', end='  ')
+                print('.', end='  ')
         print()
     print()
+    print('\t', end='')
+    for char in 'abcdefgh':
+        print(char, end='  ')
+    print()
+
+
+def print_fen_board(fen: str):
+    fen = fen.split(' ')[0]
+    index = 8
+    print(index, end='\t')
+    for char in fen:
+        if char == '/':
+            print()
+            index -= 1
+            print(index, end='\t')
+        elif char.isdigit():
+            for i in range(int(char)):
+                print('.', end='  ')
+        else:
+            print(char, end='  ')
+    print('\n')
     print('\t', end='')
     for char in 'abcdefgh':
         print(char, end='  ')

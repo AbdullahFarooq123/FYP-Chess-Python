@@ -2,6 +2,16 @@ from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Po
 from DebugUtilities.GameDependency.PieceDependency.PieceNameDependency import PieceName
 
 white_test_data = {
+    # Enpassant Check
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  .  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  P  p  .  .  .
+    # 4	.  .  .  .  .  .  .  .
+    # 3	.  .  .  .  .  .  .  .
+    # 2	.  .  .  .  .  .  .  .
+    # 1	.  .  .  .  K  .  .  .
+    # 	a  b  c  d  e  f  g  h
     '3k4/8/8/3Pp3/8/8/8/4K3 w - e6 0 3': [
         {
             'SOURCE_SQUARE': Positions.d5,
@@ -24,9 +34,29 @@ white_test_data = {
             'CASTLE_FLAG': False,
         },
 
-        
     ],
-     '3k4/8/8/8/8/8/P7/4K3 w - - 0 3': [
+    # Enpassant pin check
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  .  .  .
+    # 6	.  .  .  r  .  .  .  .
+    # 5	.  .  .  P  p  .  .  .
+    # 4	.  .  .  .  .  .  .  .
+    # 3	.  .  .  .  .  .  .  .
+    # 2	.  .  .  .  .  .  .  .
+    # 1	.  .  .  K  .  .  .  .
+    #
+    # 	a  b  c  d  e  f  g  h
+    '3k4/8/3r4/3Pp3/8/8/8/3K4 w - e6 0 3': [],
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  .  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  .  .  .  .  .
+    # 4	.  .  .  .  .  .  .  .
+    # 3	.  .  .  .  .  .  .  .
+    # 2	P  .  .  .  .  .  .  .
+    # 1	.  .  .  .  K  .  .  .
+    # 	a  b  c  d  e  f  g  h
+    '3k4/8/8/8/8/8/P7/4K3 w - - 0 3': [
         {
             'SOURCE_SQUARE': Positions.a2,
             'TARGET_SQUARE': Positions.a3,
@@ -48,9 +78,17 @@ white_test_data = {
             'CASTLE_FLAG': False,
         },
 
-        
     ],
-     '3k4/8/8/8/8/5p2/4PP2/4K3 w - - 0 2': [
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  .  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  .  .  .  .  .
+    # 4	.  .  .  .  .  .  .  .
+    # 3	.  .  .  .  .  p  .  .
+    # 2	.  .  .  .  P  P  .  .
+    # 1	.  .  .  .  K  .  .  .
+    # 	a  b  c  d  e  f  g  h
+    '3k4/8/8/8/8/5p2/4PP2/4K3 w - - 0 2': [
         {
             'SOURCE_SQUARE': Positions.e2,
             'TARGET_SQUARE': Positions.e3,
@@ -81,9 +119,18 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-        
+
     ],
-      '3k4/5P2/8/8/8/8/8/4K3 w - - 0 2': [
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  P  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  .  .  .  .  .
+    # 4	.  .  .  .  .  .  .  .
+    # 3	.  .  .  .  .  .  .  .
+    # 2	.  .  .  .  .  .  .  .
+    # 1	.  .  .  .  K  .  .  .
+    # 	a  b  c  d  e  f  g  h
+    '3k4/5P2/8/8/8/8/8/4K3 w - - 0 2': [
         {
             'SOURCE_SQUARE': Positions.f7,
             'TARGET_SQUARE': Positions.f8,
@@ -94,7 +141,7 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-         {
+        {
             'SOURCE_SQUARE': Positions.f7,
             'TARGET_SQUARE': Positions.f8,
             'PIECE_NAME': PieceName.PAWN,
@@ -104,7 +151,7 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-         {
+        {
             'SOURCE_SQUARE': Positions.f7,
             'TARGET_SQUARE': Positions.f8,
             'PIECE_NAME': PieceName.PAWN,
@@ -114,7 +161,7 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-         {
+        {
             'SOURCE_SQUARE': Positions.f7,
             'TARGET_SQUARE': Positions.f8,
             'PIECE_NAME': PieceName.PAWN,
@@ -124,10 +171,18 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-        
-    ],
 
-        '3k4/8/8/8/1p6/p7/PP6/4K3 w - - 0 3': [
+    ],
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  .  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  .  .  .  .  .
+    # 4	.  p  .  .  .  .  .  .
+    # 3	p  .  .  .  .  .  .  .
+    # 2	P  P  .  .  .  .  .  .
+    # 1	.  .  .  .  K  .  .  .
+    # 	a  b  c  d  e  f  g  h
+    '3k4/8/8/8/1p6/p7/PP6/4K3 w - - 0 3': [
         {
             'SOURCE_SQUARE': Positions.b2,
             'TARGET_SQUARE': Positions.a3,
@@ -138,7 +193,7 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-         {
+        {
             'SOURCE_SQUARE': Positions.b2,
             'TARGET_SQUARE': Positions.b3,
             'PIECE_NAME': PieceName.PAWN,
@@ -149,8 +204,16 @@ white_test_data = {
             'CASTLE_FLAG': False,
         }
     ],
-
-         '3k4/8/8/3Pp3/8/8/8/4K3 w - - 0 3': [
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  .  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  P  p  .  .  .
+    # 4	.  .  .  .  .  .  .  .
+    # 3	.  .  .  .  .  .  .  .
+    # 2	.  .  .  .  .  .  .  .
+    # 1	.  .  .  .  K  .  .  .
+    # 	a  b  c  d  e  f  g  h
+    '3k4/8/8/3Pp3/8/8/8/4K3 w - - 0 3': [
         {
             'SOURCE_SQUARE': Positions.d5,
             'TARGET_SQUARE': Positions.d6,
@@ -187,9 +250,9 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-        
+
     ],
-     '4k3/8/6p1/5P2/8/8/8/4K3 b - - 0 1': [
+    '4k3/8/6p1/5P2/8/8/8/4K3 b - - 0 1': [
         {
             'SOURCE_SQUARE': Positions.g6,
             'TARGET_SQUARE': Positions.g5,
@@ -210,9 +273,9 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-        
+
     ],
-     '4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 2': [
+    '4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 2': [
         {
             'SOURCE_SQUARE': Positions.e4,
             'TARGET_SQUARE': Positions.e3,
@@ -233,9 +296,9 @@ black_test_data = {
             'EN_PASSANT_FLAG': True,
             'CASTLE_FLAG': False,
         },
-        
+
     ],
-     '4k3/8/8/8/8/8/2p5/4K3 b - - 0 2': [
+    '4k3/8/8/8/8/8/2p5/4K3 b - - 0 2': [
         {
             'SOURCE_SQUARE': Positions.c2,
             'TARGET_SQUARE': Positions.c1,
@@ -246,7 +309,7 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-         {
+        {
             'SOURCE_SQUARE': Positions.c2,
             'TARGET_SQUARE': Positions.c1,
             'PIECE_NAME': PieceName.PAWN,
@@ -256,7 +319,7 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-         {
+        {
             'SOURCE_SQUARE': Positions.c2,
             'TARGET_SQUARE': Positions.c1,
             'PIECE_NAME': PieceName.PAWN,
@@ -266,7 +329,7 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-         {
+        {
             'SOURCE_SQUARE': Positions.c2,
             'TARGET_SQUARE': Positions.c1,
             'PIECE_NAME': PieceName.PAWN,
@@ -276,9 +339,9 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
- 
+
     ],
-     '4k3/8/8/8/4Pp2/8/2p5/2P1K3 b - - 0 2': [
+    '4k3/8/8/8/4Pp2/8/2p5/2P1K3 b - - 0 2': [
         {
             'SOURCE_SQUARE': Positions.f4,
             'TARGET_SQUARE': Positions.f3,
@@ -289,9 +352,7 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
-    
-    ],
 
-   
+    ],
 
 }

@@ -9,7 +9,7 @@ from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import c
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask
 from UnitTests.UnitTestDependencies import TestsOf
 from UnitTests.UnitTestEngine import UnitTestEngine
-from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard, get_binary
+from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard, get_binary, print_fen_board
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPieces.Rook import \
     get_rook_attack_mask_inc_end_blockers
 from DebugUtilities.BeautifyDependency.GameBeautify import print_attack_map
@@ -26,7 +26,7 @@ def run_main():
 
 
 def run_testing():
-    pass
+    print_fen_board('3k4/8/3r4/3Pp3/8/8/8/3K4 w - e6 0 3')
 
 
 run_main()
