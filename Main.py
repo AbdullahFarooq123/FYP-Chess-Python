@@ -36,5 +36,5 @@ def run_testing():
     print_bitboard(black_queen_side_castle_occupancy)
 
 
-# run_testing()
-run_main()
+run_testing()
+# run_main()
