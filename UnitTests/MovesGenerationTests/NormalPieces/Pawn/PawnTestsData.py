@@ -47,6 +47,100 @@ white_test_data = {
     #
     # 	a  b  c  d  e  f  g  h
     '3k4/8/3r4/3Pp3/8/8/8/3K4 w - e6 0 3': [],
+
+     # Capture pin check
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  .  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  .  .  .  .  .
+    # 4	b  .  .  .  .  .  .  .
+    # 3	.  .  .  p  .  .  .  .
+    # 2	.  .  P  .  .  .  .  .
+    # 1	.  .  .  K  .  .  .  .
+    #
+    # 	a  b  c  d  e  f  g  h
+    '3k4/8/8/8/b7/3p4/2P5/3K4 w - - 0 5': [],
+
+     # Pawn Promotion pin check
+    # 8	.  .  .  .  .  .  .  .
+    # 7	.  r  .  P  .  K  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  .  .  .  .  .
+    # 4	.  .  .  .  k  .  .  .
+    # 3	.  .  .  .  .  .  .  .
+    # 2	.  .  .  .  .  .  .  .
+    # 1	.  .  .  .  .  .  .  .
+    # 	a  b  c  d  e  f  g  h
+    '8/1r1P1K2/8/8/4k3/8/8/8 w - - 0 5': [],
+
+    # Pawn Capture and Promotion
+    # 8 .  .  b  .  .  k  .  .  
+    # 7 .  .  .  P  .  .  .  .
+    # 6 .  .  .  .  .  .  .  .  
+    # 5 .  .  .  .  .  K  .  .
+    # 4 .  .  .  .  .  .  .  .
+    # 3 .  .  .  .  .  .  .  .
+    # 2 .  .  .  .  .  .  .  .  
+    # 1 .  .  .  .  .  .  .  .
+    #   a  b  c  d  e  f  g  h
+    '2b2k2/3P4/8/5K2/8/8/8/8 w - - 0 5': [
+
+           {
+            'SOURCE_SQUARE': Positions.d7,
+            'TARGET_SQUARE': Positions.c8,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.BISHOP,
+            'CAPTURE_FLAG': True,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+        {
+            'SOURCE_SQUARE': Positions.d7,
+            'TARGET_SQUARE': Positions.c8,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.KNIGHT,
+            'CAPTURE_FLAG': True,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+        {
+            'SOURCE_SQUARE': Positions.d7,
+            'TARGET_SQUARE': Positions.c8,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.QUEEN,
+            'CAPTURE_FLAG': True,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+        {
+            'SOURCE_SQUARE': Positions.d7,
+            'TARGET_SQUARE': Positions.c8,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.ROOK,
+            'CAPTURE_FLAG': True,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+    ],
+
+     # 1 square move/Double Push pin check
+    # 8	.  .  .  k  .  .  .  .
+    # 7	.  .  .  .  .  .  .  .
+    # 6	.  .  .  .  .  .  .  .
+    # 5	.  .  .  .  .  .  .  .
+    # 4	b  .  .  .  .  .  .  .
+    # 3	.  .  .  .  .  .  .  .
+    # 2	.  .  P  .  .  .  .  .
+    # 1	.  .  .  K  .  .  .  .
+    # 	a  b  c  d  e  f  g  h
+
+    '3k4/8/8/8/b7/8/2P5/3K4 w - - 0 5': [],
+
+    #Check 1 square move, Double Push 
     # 8	.  .  .  k  .  .  .  .
     # 7	.  .  .  .  .  .  .  .
     # 6	.  .  .  .  .  .  .  .
@@ -79,6 +173,7 @@ white_test_data = {
         },
 
     ],
+    # Check 1 square move,Double Push, Capture
     # 8	.  .  .  k  .  .  .  .
     # 7	.  .  .  .  .  .  .  .
     # 6	.  .  .  .  .  .  .  .
@@ -99,6 +194,7 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
+        # check double push
         {
             'SOURCE_SQUARE': Positions.e2,
             'TARGET_SQUARE': Positions.e4,
@@ -109,6 +205,7 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
+        # check Capture
         {
             'SOURCE_SQUARE': Positions.e2,
             'TARGET_SQUARE': Positions.f3,
@@ -121,6 +218,7 @@ white_test_data = {
         },
 
     ],
+    # check Pawn promotion
     # 8	.  .  .  k  .  .  .  .
     # 7	.  .  .  .  .  P  .  .
     # 6	.  .  .  .  .  .  .  .
@@ -173,6 +271,7 @@ white_test_data = {
         },
 
     ],
+    # Check Blocked piece move
     # 8	.  .  .  k  .  .  .  .
     # 7	.  .  .  .  .  .  .  .
     # 6	.  .  .  .  .  .  .  .
@@ -183,6 +282,7 @@ white_test_data = {
     # 1	.  .  .  .  K  .  .  .
     # 	a  b  c  d  e  f  g  h
     '3k4/8/8/8/1p6/p7/PP6/4K3 w - - 0 3': [
+        # Check capture (pawn b2=>a3)
         {
             'SOURCE_SQUARE': Positions.b2,
             'TARGET_SQUARE': Positions.a3,
@@ -193,6 +293,7 @@ white_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
+        # 1 square move
         {
             'SOURCE_SQUARE': Positions.b2,
             'TARGET_SQUARE': Positions.b3,
@@ -204,6 +305,7 @@ white_test_data = {
             'CASTLE_FLAG': False,
         }
     ],
+    #check invalid en-passant
     # 8	.  .  .  k  .  .  .  .
     # 7	.  .  .  .  .  .  .  .
     # 6	.  .  .  .  .  .  .  .
@@ -214,6 +316,7 @@ white_test_data = {
     # 1	.  .  .  .  K  .  .  .
     # 	a  b  c  d  e  f  g  h
     '3k4/8/8/3Pp3/8/8/8/4K3 w - - 0 3': [
+        # only 1 square move generated (no en-passant move)
         {
             'SOURCE_SQUARE': Positions.d5,
             'TARGET_SQUARE': Positions.d6,
@@ -229,6 +332,16 @@ white_test_data = {
 }
 
 black_test_data = {
+    # Check 1 square move, Double Push 
+    # 8 .  .  .  .  k  .  .  .
+    # 7 .  .  .  .  .  .  p  .
+    # 6 .  .  .  .  .  .  .  .
+    # 5 .  .  .  .  .  .  .  .
+    # 4 .  .  .  .  .  .  .  .
+    # 3 .  .  .  .  .  .  .  .
+    # 2 .  .  .  .  .  .  .  .
+    # 1 .  .  .  .  K  .  .  .
+    #   a  b  c  d  e  f  g  h
     '4k3/6p1/8/8/8/8/8/4K3 b - - 0 1': [
         {
             'SOURCE_SQUARE': Positions.g7,
@@ -252,6 +365,19 @@ black_test_data = {
         },
 
     ],
+
+    #Check 1 Square move, Capture move 
+
+    # 8 .  .  .  .  k  .  .  .  
+    # 7 .  .  .  .  .  .  .  .  
+    # 6 .  .  .  .  .  .  p  .
+    # 5 .  .  .  .  .  P  .  .
+    # 4 .  .  .  .  .  .  .  .
+    # 3 .  .  .  .  .  .  .  .
+    # 2 .  .  .  .  .  .  .  .
+    # 1 .  .  .  .  K  .  .  .
+    #   a  b  c  d  e  f  g  h
+
     '4k3/8/6p1/5P2/8/8/8/4K3 b - - 0 1': [
         {
             'SOURCE_SQUARE': Positions.g6,
@@ -263,6 +389,7 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
+        # Check Capture 
         {
             'SOURCE_SQUARE': Positions.g6,
             'TARGET_SQUARE': Positions.f5,
@@ -275,6 +402,16 @@ black_test_data = {
         },
 
     ],
+    # Check 1 Square move, En-passant  
+    # 8  .  .  .  .  k  .  .  .  
+    # 7  .  .  .  .  .  .  .  .
+    # 6  .  .  .  .  .  .  .  .
+    # 5  .  .  .  .  .  .  .  .
+    # 4  .  .  .  P  p  .  .  .
+    # 3  .  .  .  .  .  .  .  .
+    # 2  .  .  .  .  .  .  .  .
+    # 1  .  .  .  .  K  .  .  .
+    #    a  b  c  d  e  f  g  h
     '4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 2': [
         {
             'SOURCE_SQUARE': Positions.e4,
@@ -286,6 +423,7 @@ black_test_data = {
             'EN_PASSANT_FLAG': False,
             'CASTLE_FLAG': False,
         },
+        #Check En-passant
         {
             'SOURCE_SQUARE': Positions.e4,
             'TARGET_SQUARE': Positions.d3,
@@ -298,6 +436,15 @@ black_test_data = {
         },
 
     ],
+    # Check Pawn Promotion    
+    # 8 .  .  .  .  k  .  .  .  
+    # 7 .  .  .  .  .  .  .  .
+    # 6 .  .  .  .  .  .  .  .
+    # 4 .  .  .  .  .  .  .  .
+    # 3 .  .  .  .  .  .  .  .
+    # 2 .  .  p  .  .  .  .  .
+    # 1 .  .  .  .  K  .  .  .
+    # a  b  c  d  e  f  g  h
     '4k3/8/8/8/8/8/2p5/4K3 b - - 0 2': [
         {
             'SOURCE_SQUARE': Positions.c2,
@@ -341,7 +488,18 @@ black_test_data = {
         },
 
     ],
+    #Check pawn promotion when pawn is blocked
+    # 8 .  .  .  .  k  .  .  .  
+    # 7 .  .  .  .  .  .  .  .
+    # 6 .  .  .  .  .  .  .  .
+    # 5 .  .  .  .  .  .  .  .
+    # 4 .  .  .  .  P  p  .  .
+    # 3 .  .  .  .  .  .  .  .
+    # 2 .  .  p  .  .  .  .  .
+    # 1 .  .  P  .  K  .  .  .
+    #   a  b  c  d  e  f  g  h
     '4k3/8/8/8/4Pp2/8/2p5/2P1K3 b - - 0 2': [
+        # 1 square move for pawn at f4 
         {
             'SOURCE_SQUARE': Positions.f4,
             'TARGET_SQUARE': Positions.f3,
@@ -355,4 +513,136 @@ black_test_data = {
 
     ],
 
+    # En-Passant pin check
+    # 8 .  .  .  .  k  .  .  .  
+    # 7 .  .  .  .  .  .  .  .  
+    # 6 .  .  .  .  .  .  .  .  
+    # 5 .  .  .  .  .  .  .  .  
+    # 4 .  .  .  P  p  .  .  .  
+    # 3 .  .  .  .  R  .  .  .  
+    # 2 .  .  .  .  .  .  .  .  
+    # 1 .  .  .  K  .  .  .  .  
+    #   a  b  c  d  e  f  g  h  
+
+    '4k3/8/8/8/3Pp3/4R3/8/3K4 b - d3 0 3': [],
+
+    # Capture pin check
+    # 8 .  .  .  .  k  .  .  .  
+    # 7 .  .  .  .  .  .  .  .
+    # 6 .  .  .  .  .  .  .  .
+    # 5 .  .  .  .  .  .  .  .
+    # 4 .  .  .  .  p  .  .  .
+    # 3 .  .  .  P  R  .  .  .
+    # 2 .  .  .  .  .  .  .  .
+    # 1 .  .  .  K  .  .  .  .
+    #   a  b  c  d  e  f  g  h
+
+    '4k3/8/8/8/4p3/3PR3/8/3K4 b - - 0 3': [],
+
+     # Pawn Promotion pin check
+    # 8 .  .  .  .  .  .  .  .  
+    # 7 .  .  .  .  .  .  .  .
+    # 6 .  .  .  .  .  .  .  .
+    # 5 .  .  .  .  .  .  .  .
+    # 4 .  K  .  .  .  .  .  .
+    # 3 .  .  .  .  .  .  .  .
+    # 2 .  .  .  k  .  p  .  R
+    # 1 .  .  .  .  .  .  .  .
+    #   a  b  c  d  e  f  g  h
+
+    '8/8/8/8/1K6/8/3k1p1R/8 b - - 0 2': [],
+
+    # Pawn promotion and Capture
+    # 8 .  .  .  .  .  .  .  .  
+    # 7 .  .  .  .  .  .  .  .
+    # 6 .  .  .  .  .  .  .  .
+    # 5 .  .  .  .  .  .  .  .
+    # 4 .  .  .  k  .  .  .  .
+    # 3 .  .  .  .  .  .  .  .
+    # 2 .  .  .  .  .  p  .  .
+    # 1 .  .  .  K  .  .  B  .
+    #   a  b  c  d  e  f  g  h
+
+    '8/8/8/8/3k4/8/5p2/3K2B1 b - - 0 2': [
+   
+        {
+            'SOURCE_SQUARE': Positions.f2,
+            'TARGET_SQUARE': Positions.g1,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.BISHOP,
+            'CAPTURE_FLAG': False,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+        {
+            'SOURCE_SQUARE': Positions.f2,
+            'TARGET_SQUARE': Positions.g1,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.KNIGHT,
+            'CAPTURE_FLAG': False,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+        {
+            'SOURCE_SQUARE': Positions.f2,
+            'TARGET_SQUARE': Positions.g1,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.QUEEN,
+            'CAPTURE_FLAG': False,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+        {
+            'SOURCE_SQUARE': Positions.f2,
+            'TARGET_SQUARE': Positions.g1,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.ROOK,
+            'CAPTURE_FLAG': False,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+
+    ],
+
+    # Double Push/1 square move pin check
+    # 8 .  .  .  .  .  .  .  .  
+    # 7 .  .  R  .  p  k  .  .
+    # 6 .  .  .  .  .  .  .  .
+    # 5 .  .  .  .  .  .  .  .
+    # 4 .  .  .  .  .  .  .  .
+    # 3 .  .  .  .  .  .  .  .
+    # 2 .  .  .  .  .  .  .  .
+    # 1 .  .  .  K  .  .  .  .
+    #   a  b  c  d  e  f  g  h
+
+    '8/2R1pk2/8/8/8/8/8/3K4 b - - 0 3': [],
+
+    #Check Invalid en-passant
+    # 8  .  .  .  .  .  .  .  .  
+    # 7  .  .  .  .  .  k  .  .
+    # 6  .  .  .  .  .  .  .  .
+    # 5  .  .  .  .  .  .  .  .
+    # 4  .  .  .  P  p  .  .  .
+    # 3  .  .  .  .  .  .  .  .  
+    # 2  .  .  .  .  .  .  .  .
+    # 1  .  .  .  K  .  .  .  .
+    #    a  b  c  d  e  f  g  h
+
+    '8/5k2/8/8/3Pp3/8/8/3K4 b - - 0 5': [
+        {
+            'SOURCE_SQUARE': Positions.e4,
+            'TARGET_SQUARE': Positions.e3,
+            'PIECE_NAME': PieceName.PAWN,
+            'PROMOTION_PIECE_NAME': PieceName.NONE,
+            'CAPTURE_FLAG': False,
+            'DOUBLE_PUSH_FLAG': False,
+            'EN_PASSANT_FLAG': False,
+            'CASTLE_FLAG': False,
+        },
+
+    ],
 }
