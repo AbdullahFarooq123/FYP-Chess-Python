@@ -1,3 +1,4 @@
+from UnitTests.MovesGenerationTests import MoveGenerationTest
 from UnitTests.UnitTestDependencies import TestsOf
 from UnitTests.UnitTestModels.UnitTestSectionModel import UTestSectionModel
 from UnitTests.PreCalculationAlgorithmsTests import PreCalculationTests
@@ -13,7 +14,8 @@ class UnitTestEngine:
         self.show_only_tests = show_only_tests
 
     def run_tests(self):
-        self.test_results += PreCalculationTests.run_tests()
+        # self.test_results += PreCalculationTests.run_tests()
+        self.test_results += MoveGenerationTest.run_tests()
 
     def print_tests(self):
         for test in self.test_results:

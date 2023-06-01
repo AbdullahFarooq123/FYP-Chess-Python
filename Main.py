@@ -29,5 +29,5 @@ def run_testing():
     pass
 
 
-# run_main()
-run_testing()
+run_main()
+# run_testing()

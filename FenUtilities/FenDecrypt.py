@@ -1,4 +1,4 @@
-from DebugUtilities.BeautifyDependency.GameBeautify import white_pieces_char, black_pieces_char
+from DebugUtilities.BeautifyDependency.GameBeautify import white_pieces_char, black_pieces_char, print_bitboard
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
 from DebugUtilities.GameDependency.PlayerDependency.PlayerSideDependency import PlayerSide
 from FenUtilities.FenModel import Fen
@@ -55,7 +55,7 @@ def __decrypt_boards(fen: str) -> [int, int, list, int, int]:
         elif c.isdigit():
             col += int(c)
         else:
-            square_mask = square_bitmask[row * 8 + col]
+            square_mask = square_bitmask[63-(row * 8 + col)]
             game_board |= square_mask
             col += 1
             if c in white_pieces_char:

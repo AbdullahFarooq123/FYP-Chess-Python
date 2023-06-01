@@ -1,3 +1,6 @@
+from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard
+from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
+    SpecificDirections
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
 from DebugUtilities.GameDependency.PieceDependency.PieceNameDependency import PieceName
 from DebugUtilities.GameDependency.PlayerDependency.PlayerSideDependency import PlayerSide
@@ -6,7 +9,7 @@ from MoveGenerationUtilities.Const import before_top_edge, before_bottom_edge
 from MoveGenerationUtilities.EncryptionDependency.MoveEncryptions.EncodeMove import encode_move
 from MoveGenerationUtilities.GenerateMovesEngine.GenerateMovesDependencies import *
 from MoveGenerationUtilities.GenerateMovesEngine.MovesModel import MoveDependencyModel
-from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import unsigned
+from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import unsigned, move_bit
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask
 
 
@@ -34,12 +37,12 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
         pawn_attack_map = pawn_attack_maps[PlayerSide.WHITE.value][pawn_position.value]
         pawn_attack_map &= move_model.fen.black_board
         # generate pawn quite move and validate it
-        quite_move: int = pawn_positional_mask >> 8
+        quite_move: int = move_bit(pawn_positional_mask, SpecificDirections.NORTH)
         quite_move &= move_model.board_inverse
         # generate pawn double push move and validate it
         double_push_move: int = 0
         if pawn_positional_mask & before_bottom_edge:
-            double_push_move: int = pawn_positional_mask >> 16
+            double_push_move: int = move_bit(quite_move, SpecificDirections.NORTH)
             double_push_move &= move_model.board_inverse
         # get enpassant move
         en_passant_move: Positions = get_enpassant_move(enpassant_square=move_model.fen.enpassant_square_position,
