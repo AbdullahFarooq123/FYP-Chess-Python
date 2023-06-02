@@ -30,10 +30,8 @@ def run_main():
 
 
 def run_testing():
-    print_bitboard(white_king_side_castle_occupancy)
-    print_bitboard(white_queen_side_castle_occupancy)
-    print_bitboard(black_king_side_castle_occupancy)
-    print_bitboard(black_queen_side_castle_occupancy)
+    print_fen_board('2b2k2/3P4/8/5K2/8/8/8/8 w - - 0 5')
+    print_bitboard(king_attack_maps[Positions.e4.value])
 
 
 run_testing()
