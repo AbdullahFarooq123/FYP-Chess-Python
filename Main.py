@@ -1,12 +1,14 @@
 import json
 
+from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
+    SpecificDirections
 from FenUtilities.FenDecrypt import *
 
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPieces.SliderAttacks import \
     init_slider_attacks
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SquareBitmaskDependencies import init_squares
-from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import count_set_bits
-from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask
+from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import count_set_bits, move_bit
+from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask, king_attack_maps
 from UnitTests.UnitTestDependencies import TestsOf
 from UnitTests.UnitTestEngine import UnitTestEngine
 from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard, get_binary, print_fen_board
@@ -26,7 +28,7 @@ def run_main():
 
 
 def run_testing():
-    print_fen_board('3k4/8/3r4/3Pp3/8/8/8/3K4 w - e6 0 3')
+    print_bitboard(king_attack_maps[Positions.e4.value])
 
 
 run_main()
