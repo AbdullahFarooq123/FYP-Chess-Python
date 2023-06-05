@@ -28,7 +28,11 @@ def run_main():
 
 
 def run_testing():
-    print_bitboard(king_attack_maps[Positions.e4.value])
+    fen: Fen = decryptFen('3k4/8/3r4/3Pp3/8/8/8/3K4 w - e6 0 3')
+    print_fen_board('3k4/8/3r4/3Pp3/8/8/8/3K4 w - e6 0 3')
+    print_bitboard(fen.game_board & fen.white_board)
+    print(get_binary(fen.game_board))
+    print(fen.game_board)
 
 
 run_main()
