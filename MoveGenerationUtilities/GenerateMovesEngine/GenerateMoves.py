@@ -37,11 +37,7 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
         # get pawn attack map and validate it
         pawn_attack_map = pawn_attack_maps[PlayerSide.WHITE.value][pawn_position.value]
         pawn_attack_map &= move_model.fen.black_board
-<<<<<<< HEAD
         for attacker in move_model.attack_on_king_attr.attackers:
-=======
-        for attacker in move_model.attackers:
->>>>>>> 2ed146e (Early Day Commit)
             pawn_attack_map &= attacker[0]
         # generate pawn quite move and validate it
         quite_move: int = move_bit(pawn_positional_mask, SpecificDirections.NORTH)
