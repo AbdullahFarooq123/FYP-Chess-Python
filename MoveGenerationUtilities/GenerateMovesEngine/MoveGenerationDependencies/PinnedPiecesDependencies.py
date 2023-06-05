@@ -8,7 +8,7 @@ from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationModels.PinnedPiec
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationModels.RelativeDirectionModel import RelativeDirection
 from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import get_least_bit_index
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import rook_attacks_table, bishop_attacks_table, \
-    directional_rays
+    directional_rays, square_bitmask
 
 
 def get_pinned_pieces(king_rays: int, player_pieces: list[int], king_position: Positions,
@@ -22,7 +22,7 @@ def get_pinned_pieces(king_rays: int, player_pieces: list[int], king_position: P
             relative_dir_to_player_piece: RelativeDirection = get_alignment_wrt_each_other(king_position,
                                                                                            player_piece_position)
             for opponent_piece_name in list(PieceName)[2:5]:
-                opponent_piece: int = opponent_sliding_pieces_list[2-opponent_piece_name.value]
+                opponent_piece: int = opponent_sliding_pieces_list[2 - opponent_piece_name.value]
                 while opponent_piece:
                     opponent_piece_position: Positions = Positions(get_least_bit_index(opponent_piece))
                     relative_dir_to_opponent_piece: RelativeDirection = get_alignment_wrt_each_other(king_position,
@@ -37,7 +37,9 @@ def get_pinned_pieces(king_rays: int, player_pieces: list[int], king_position: P
                             directional_rays[relative_dir_to_player_piece.p1_position_wrt_p2.value][
                                 player_piece_position.value]
                         pinned_piece_model.add_piece(player_piece_position,
-                                                     opponent_piece_ray_in_king_dir & player_piece_ray_in_opponent_piece_dir)
+                                                     (
+                                                                 opponent_piece_ray_in_king_dir & player_piece_ray_in_opponent_piece_dir) |
+                                                     square_bitmask[opponent_piece_position.value])
                     opponent_piece &= opponent_piece - 1
             player_piece &= player_piece - 1
     return pinned_piece_model

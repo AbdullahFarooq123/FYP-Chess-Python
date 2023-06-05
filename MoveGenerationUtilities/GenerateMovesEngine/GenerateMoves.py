@@ -1,3 +1,4 @@
+from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
@@ -52,6 +53,8 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
                                                         previous_move=move_model.previous_move)
         # set piece limit if the move is promotion one
         piece_length = list(PieceName)[1:5] if promotion else list(PieceName)[0:1]
+        if is_pinned:
+            pawn_attack_map &= move_model.pinned_pieces.attacker_rays
         # ===================================pawn attack moves===================================
         while pawn_attack_map:
             # get attack square as Position
@@ -74,7 +77,11 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
         # if quite move exists
         if quite_move != Positions.OUT_OF_BOUNDS:
             if is_pinned:
-                quite_move &= move_model.pinned_pieces.attacker_rays
+                filtered_move = quite_move.value & move_model.pinned_pieces.attacker_rays
+                if filtered_move:
+                    quite_move = Positions(filtered_move)
+                else:
+                    quite_move = Positions.OUT_OF_BOUNDS
             # store moves for promotion or quite moves
             if (quite_move.value & move_model.attack_on_king_attr.attackers_ray) and \
                     quite_move != Positions.OUT_OF_BOUNDS:
@@ -94,7 +101,11 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
             if double_push_move != Positions.OUT_OF_BOUNDS:
                 # store move as double push move
                 if is_pinned:
-                    quite_move &= move_model.pinned_pieces.attacker_rays
+                    filtered_move = double_push_move.value & move_model.pinned_pieces.attacker_rays
+                    if filtered_move:
+                        quite_move = Positions(filtered_move)
+                    else:
+                        quite_move = Positions.OUT_OF_BOUNDS
                 if double_push_move.value & move_model.attack_on_king_attr.attackers_ray and \
                         quite_move != Positions.OUT_OF_BOUNDS:
                     pawn_moves.append(
@@ -108,8 +119,14 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
                                     castle_flag=False))
         # ===================================enpassant move===================================
         # if enpassant exists
-        if en_passant_move != Positions.OUT_OF_BOUNDS and move_model.attack_on_king_attr.check_count == 0 and \
-                not is_pinned:
+        if is_pinned and en_passant_move != Positions.OUT_OF_BOUNDS:
+            filtered_move = en_passant_move.value & move_model.pinned_pieces.attacker_rays
+            if filtered_move:
+                en_passant_move = Positions(filtered_move)
+            else:
+                en_passant_move = Positions.OUT_OF_BOUNDS
+        if en_passant_move != Positions.OUT_OF_BOUNDS and move_model.attack_on_king_attr.check_count == 0:
+
             possible_opponent_position: Positions = Positions(en_passant_move.value - 8)
             # create mask of opponent position w.r.t enpassant square
             possible_opponent_position_mask: int = square_bitmask[possible_opponent_position.value]

@@ -35,5 +35,5 @@ def run_testing():
     print(fen.game_board)
 
 
-run_testing()
-# run_main()
+# run_testing()
+run_main()
