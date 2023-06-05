@@ -1,5 +1,8 @@
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
+from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
+from DebugUtilities.GameDependency.PieceDependency.PieceNameDependency import PieceName
+from DebugUtilities.GameDependency.PlayerDependency.PlayerSideDependency import PlayerSide
 from FenUtilities.FenModel import Fen
 from MoveGenerationUtilities.Const import before_top_edge, before_bottom_edge
 from MoveGenerationUtilities.EncryptionDependency.MoveEncryptions.EncodeMove import encode_move
