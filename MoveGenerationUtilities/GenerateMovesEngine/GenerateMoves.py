@@ -7,11 +7,17 @@ from DebugUtilities.GameDependency.PlayerDependency.PlayerSideDependency import 
 from FenUtilities.FenModel import Fen
 from MoveGenerationUtilities.Const import before_top_edge, before_bottom_edge
 from MoveGenerationUtilities.EncryptionDependency.MoveEncryptions.EncodeMove import encode_move
+from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationDependencies.CastleRightsDependencies import \
+    squares_are_attacked
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationDependencies.GeneralDependencies import \
     get_enpassant_move
+from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationDependencies.PinnedPiecesDependencies import \
+    validate_for_pinned
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationModels.MovesModel import MoveDependencyModel
 from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import move_bit, get_least_bit_index
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask, pawn_attack_maps
+from MoveGenerationUtilities.Const import white_king_side_castle_occupancy, white_queen_side_castle_occupancy, \
+    black_king_side_castle_occupancy, black_queen_side_castle_occupancy
 
 
 def get_moves(fen: Fen, previous_move: int) -> list:
@@ -76,12 +82,8 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
         quite_move: Positions = Positions(get_least_bit_index(quite_move))
         # if quite move exists
         if quite_move != Positions.OUT_OF_BOUNDS:
-            if is_pinned:
-                filtered_move = quite_move.value & move_model.pinned_pieces.attacker_rays
-                if filtered_move:
-                    quite_move = Positions(filtered_move)
-                else:
-                    quite_move = Positions.OUT_OF_BOUNDS
+            quite_move: Positions = validate_for_pinned(is_pinned=is_pinned, move=quite_move,
+                                                        attacker_rays=move_model.pinned_pieces.attacker_rays)
             # store moves for promotion or quite moves
             if (quite_move.value & move_model.attack_on_king_attr.attackers_ray) and \
                     quite_move != Positions.OUT_OF_BOUNDS:
@@ -100,12 +102,8 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
             # if double push exists
             if double_push_move != Positions.OUT_OF_BOUNDS:
                 # store move as double push move
-                if is_pinned:
-                    filtered_move = double_push_move.value & move_model.pinned_pieces.attacker_rays
-                    if filtered_move:
-                        quite_move = Positions(filtered_move)
-                    else:
-                        quite_move = Positions.OUT_OF_BOUNDS
+                double_push_move: Positions = validate_for_pinned(is_pinned=is_pinned, move=double_push_move,
+                                                                  attacker_rays=move_model.pinned_pieces.attacker_rays)
                 if double_push_move.value & move_model.attack_on_king_attr.attackers_ray and \
                         quite_move != Positions.OUT_OF_BOUNDS:
                     pawn_moves.append(
@@ -119,30 +117,59 @@ def get_white_pawn_moves(move_model: MoveDependencyModel) -> list[int]:
                                     castle_flag=False))
         # ===================================enpassant move===================================
         # if enpassant exists
-        if is_pinned and en_passant_move != Positions.OUT_OF_BOUNDS:
-            filtered_move = en_passant_move.value & move_model.pinned_pieces.attacker_rays
-            if filtered_move:
-                en_passant_move = Positions(filtered_move)
-            else:
-                en_passant_move = Positions.OUT_OF_BOUNDS
-        if en_passant_move != Positions.OUT_OF_BOUNDS and move_model.attack_on_king_attr.check_count == 0:
+        if en_passant_move != Positions.OUT_OF_BOUNDS:
+            en_passant_move: Positions = validate_for_pinned(is_pinned=is_pinned, move=en_passant_move,
+                                                             attacker_rays=move_model.pinned_pieces.attacker_rays)
+            if en_passant_move != Positions.OUT_OF_BOUNDS and move_model.attack_on_king_attr.check_count == 0:
 
-            possible_opponent_position: Positions = Positions(en_passant_move.value - 8)
-            # create mask of opponent position w.r.t enpassant square
-            possible_opponent_position_mask: int = square_bitmask[possible_opponent_position.value]
-            # if piece exists at location and difference btw opponent and player piece position is 1
-            if (possible_opponent_position_mask & move_model.player_attr.opponent_pieces[
-                PieceName.PAWN.value]) and (
-                    abs(pawn_position.value - possible_opponent_position.value) == 1):
-                # add enpassant move into the list
-                pawn_moves.append(
-                    encode_move(source_square=pawn_position,
-                                target_square=en_passant_move,
-                                piece_name=PieceName.PAWN,
-                                promotion_piece_name=PieceName.NONE,
-                                capture_flag=False,
-                                double_push_flag=False,
-                                enpassant_flag=True,
-                                castle_flag=False))
+                possible_opponent_position: Positions = Positions(en_passant_move.value - 8)
+                # create mask of opponent position w.r.t enpassant square
+                possible_opponent_position_mask: int = square_bitmask[possible_opponent_position.value]
+                # if piece exists at location and difference btw opponent and player piece position is 1
+                if (possible_opponent_position_mask & move_model.player_attr.opponent_pieces[
+                    PieceName.PAWN.value]) and (
+                        abs(pawn_position.value - possible_opponent_position.value) == 1):
+                    # add enpassant move into the list
+                    pawn_moves.append(
+                        encode_move(source_square=pawn_position,
+                                    target_square=en_passant_move,
+                                    piece_name=PieceName.PAWN,
+                                    promotion_piece_name=PieceName.NONE,
+                                    capture_flag=False,
+                                    double_push_flag=False,
+                                    enpassant_flag=True,
+                                    castle_flag=False))
         pawn &= pawn - 1
     return pawn_moves
+
+
+def get_white_castle_moves(move_model: MoveDependencyModel) -> list[int]:
+    white_king: int = move_model.fen.white_pieces[PieceName.KING.value]
+    white_king_position: Positions = Positions(get_least_bit_index(white_king))
+    castle_moves: list[int] = []
+    if move_model.white_castle.can_castle():
+        if move_model.white_castle.can_queen_side_castle() and not squares_are_attacked(
+                squares=white_queen_side_castle_occupancy, opponent_pieces=move_model.player_attr.opponent_pieces,
+                side=PlayerSide.WHITE, board_state=move_model.fen.game_board):
+            castle_moves.append(
+                encode_move(source_square=white_king_position,
+                            target_square=Positions.c1,
+                            piece_name=PieceName.KING,
+                            promotion_piece_name=PieceName.NONE,
+                            capture_flag=False,
+                            double_push_flag=False,
+                            enpassant_flag=False,
+                            castle_flag=True))
+        if move_model.white_castle.can_king_side_castle() and not squares_are_attacked(
+                squares=white_king_side_castle_occupancy, opponent_pieces=move_model.player_attr.opponent_pieces,
+                side=PlayerSide.WHITE, board_state=move_model.fen.game_board):
+            castle_moves.append(
+                encode_move(source_square=white_king_position,
+                            target_square=Positions.g1,
+                            piece_name=PieceName.KING,
+                            promotion_piece_name=PieceName.NONE,
+                            capture_flag=False,
+                            double_push_flag=False,
+                            enpassant_flag=False,
+                            castle_flag=True))
+    return castle_moves

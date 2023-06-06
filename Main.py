@@ -3,6 +3,8 @@ import json
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
 from FenUtilities.FenDecrypt import *
+from MoveGenerationUtilities.Const import white_king_side_castle_occupancy, white_queen_side_castle_occupancy, \
+    black_king_side_castle_occupancy, black_queen_side_castle_occupancy
 
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPieces.SliderAttacks import \
     init_slider_attacks
@@ -28,11 +30,10 @@ def run_main():
 
 
 def run_testing():
-    fen: Fen = decryptFen('3k4/8/3r4/3Pp3/8/8/8/3K4 w - e6 0 3')
-    print_fen_board('3k4/8/3r4/3Pp3/8/8/8/3K4 w - e6 0 3')
-    print_bitboard(fen.game_board & fen.white_board)
-    print(get_binary(fen.game_board))
-    print(fen.game_board)
+    print_bitboard(white_king_side_castle_occupancy)
+    print_bitboard(white_queen_side_castle_occupancy)
+    print_bitboard(black_king_side_castle_occupancy)
+    print_bitboard(black_queen_side_castle_occupancy)
 
 
 # run_testing()

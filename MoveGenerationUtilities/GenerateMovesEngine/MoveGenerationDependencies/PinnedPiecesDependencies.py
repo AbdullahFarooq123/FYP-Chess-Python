@@ -38,11 +38,21 @@ def get_pinned_pieces(king_rays: int, player_pieces: list[int], king_position: P
                                 player_piece_position.value]
                         pinned_piece_model.add_piece(player_piece_position,
                                                      (
-                                                                 opponent_piece_ray_in_king_dir & player_piece_ray_in_opponent_piece_dir) |
+                                                             opponent_piece_ray_in_king_dir & player_piece_ray_in_opponent_piece_dir) |
                                                      square_bitmask[opponent_piece_position.value])
                     opponent_piece &= opponent_piece - 1
             player_piece &= player_piece - 1
     return pinned_piece_model
+
+
+def validate_for_pinned(is_pinned: bool, move: Positions, attacker_rays: int) -> Positions:
+    if is_pinned:
+        filtered_move: int = move.value & attacker_rays
+        if filtered_move:
+            return Positions(filtered_move)
+        else:
+            return Positions.OUT_OF_BOUNDS
+    return move
 
 
 def __validate_opponent_piece_alignment(opponent_piece_name: PieceName, p2_position_wrt_p1: SpecificDirections,

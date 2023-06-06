@@ -1,5 +1,6 @@
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
 from DebugUtilities.GameDependency.PieceDependency.PieceNameDependency import PieceName
+from DebugUtilities.GameDependency.PlayerDependency.PlayerSideDependency import PlayerSide
 from FenUtilities.FenModel import Fen
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationDependencies.GeneralDependencies import \
     get_player_wise_pieces_and_sides, get_sliding_pieces, get_sliding_pieces_list
@@ -8,6 +9,7 @@ from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationDependencies.GetA
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationDependencies.PinnedPiecesDependencies import \
     get_pinned_pieces
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationModels.AttackOnKingModel import AttackOnKing
+from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationModels.CastleModel import Castle
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationModels.PinnedPieceModel import PinnedPiece
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationModels.PlayerAttributesModel import PlayerAttribute
 
@@ -18,6 +20,8 @@ from MoveGenerationUtilities.PreCalculations.PreCalculationsData import rook_att
 class MoveDependencyModel:
     def __init__(self, fen: Fen, previous_move: int):
         self.fen = fen
+        self.white_castle = Castle(fen.white_castle)
+        self.black_castle = Castle(fen.black_castle)
         self.previous_move = previous_move
         self.board_inverse = unsigned(~fen.game_board)
         # decide opponent and player pieces
