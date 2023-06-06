@@ -37,6 +37,10 @@ def run_testing():
     print_bitboard(fen.game_board & fen.white_board)
     print(get_binary(fen.game_board))
     print(fen.game_board)
+    print_bitboard(white_king_side_castle_occupancy)
+    print_bitboard(white_queen_side_castle_occupancy)
+    print_bitboard(black_king_side_castle_occupancy)
+    print_bitboard(black_queen_side_castle_occupancy)
 
 
 run_testing()
