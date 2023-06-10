@@ -1,9 +1,9 @@
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
 from DebugUtilities.GameDependency.PieceDependency.PieceNameDependency import PieceName
 
-# King Tests 
+# King's Move Tests 
 
-white_King_test_data = {
+white_king_test_data = {
 
 
 # Normal King Move
@@ -485,7 +485,7 @@ white_King_test_data = {
 
 
 
-black_King_test_data = {
+black_king_test_data = {
 
 
 # Normal King Move
