@@ -2,6 +2,7 @@ import json
 
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
+from DebugUtilities.GameDependency.PieceDependency.PieceNameDependency import PieceName
 from FenUtilities.FenDecrypt import *
 from MoveGenerationUtilities.Const import white_king_side_castle_occupancy, white_queen_side_castle_occupancy, \
     black_king_side_castle_occupancy, black_queen_side_castle_occupancy
@@ -9,11 +10,11 @@ from MoveGenerationUtilities.Const import white_king_side_castle_occupancy, whit
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPieces.SliderAttacks import \
     init_slider_attacks
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SquareBitmaskDependencies import init_squares
-from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import count_set_bits, move_bit
+from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import count_set_bits, move_bit, bitmask
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask, king_attack_maps
 from UnitTests.UnitTestDependencies import TestsOf
 from UnitTests.UnitTestEngine import UnitTestEngine
-from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard, get_binary, print_fen_board
+from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard, get_binary, print_fen_board, print_game_board
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPieces.Rook import \
     get_rook_attack_mask_inc_end_blockers
 from DebugUtilities.BeautifyDependency.GameBeautify import print_attack_map
@@ -41,6 +42,11 @@ def run_testing():
     print_bitboard(white_queen_side_castle_occupancy)
     print_bitboard(black_king_side_castle_occupancy)
     print_bitboard(black_queen_side_castle_occupancy)
+    fen: Fen = decrypt_fen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+    print_bitboard(fen.white_pieces[PieceName.ROOK.value]&1)
+    print_game_board(white_state=fen.white_board, white_pieces=fen.white_pieces, black_state=fen.black_board,
+                     black_pieces=fen.black_pieces)
+    print_bitboard(fen.white_pieces[PieceName.KING.value])
 
 
 run_testing()

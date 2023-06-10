@@ -17,7 +17,7 @@ class UnitTestEngine:
 
     def run_tests(self):
         init_attacks()
-        # self.test_results += PreCalculationTests.run_tests()
+        self.test_results += PreCalculationTests.run_tests()
         self.test_results += MoveGenerationTest.run_tests()
 
     def print_tests(self):

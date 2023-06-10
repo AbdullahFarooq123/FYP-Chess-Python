@@ -5,7 +5,7 @@ from FenUtilities.FenModel import Fen
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask
 
 
-def decryptFen(fen: str) -> Fen:
+def decrypt_fen(fen: str) -> Fen:
     positional_fen, player_turn, castle_rights, enpassant_square, _, _ = fen.split(' ')
     game_board, white_board, white_pieces, black_board, black_pieces = __decrypt_boards(positional_fen)
     player_turn = __decrypt_player_turn(player_turn)
@@ -55,7 +55,7 @@ def __decrypt_boards(fen: str) -> [int, int, list, int, int]:
         elif c.isdigit():
             col += int(c)
         else:
-            square_mask = square_bitmask[63-(row * 8 + col)]
+            square_mask = square_bitmask[63 - (row * 8 + col)]
             game_board |= square_mask
             col += 1
             if c in white_pieces_char:

@@ -1,5 +1,5 @@
 from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard, print_game_board
-from FenUtilities.FenDecrypt import decryptFen
+from FenUtilities.FenDecrypt import decrypt_fen
 from FenUtilities.FenModel import Fen
 from MoveGenerationUtilities.GenerateMovesEngine.GenerateMoves import get_white_pawn_moves
 from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationModels.MovesModel import MoveDependencyModel
@@ -20,7 +20,7 @@ def run_pawn_moves_tests() -> UTestSectionModel:
 def white_pawn_moves_length_tests() -> UTestDataModel:
     unit_tests: list[UnitTest] = []
     for index, (fen, tested_values) in enumerate(white_test_data.items()):
-        fen_model: Fen = decryptFen(fen)
+        fen_model: Fen = decrypt_fen(fen)
         move_model = MoveDependencyModel(fen_model, 0)
         moves_list_len = str(len(get_white_pawn_moves(move_model)))
         tested_values_len = str(len(tested_values))
@@ -35,7 +35,7 @@ def white_pawn_moves_tests() -> UTestDataModel:
     unit_tests: list[UnitTest] = []
     index: int = 1
     for fen, tested_values in white_test_data.items():
-        fen_model: Fen = decryptFen(fen)
+        fen_model: Fen = decrypt_fen(fen)
         move_model = MoveDependencyModel(fen_model, 0)
         if fen in []:
             print_game_board(fen_model.white_board,fen_model.white_pieces,fen_model.black_board,fen_model.black_pieces)
@@ -60,7 +60,7 @@ def white_pawn_moves_tests() -> UTestDataModel:
 def black_pawn_moves_length_tests() -> UTestDataModel:
     unit_tests: list[UnitTest] = []
     for index, (fen, tested_values) in enumerate(black_test_data.items()):
-        fen_model: Fen = decryptFen(fen)
+        fen_model: Fen = decrypt_fen(fen)
         move_model = MoveDependencyModel(fen_model, 0)
         moves_list_len = str(len(get_white_pawn_moves(move_model)))
         tested_values_len = str(len(tested_values))
@@ -73,7 +73,7 @@ def black_pawn_moves_tests() -> UTestDataModel:
     unit_tests: list[UnitTest] = []
     index: int = 1
     for fen, tested_values in black_test_data.items():
-        fen_model: Fen = decryptFen(fen)
+        fen_model: Fen = decrypt_fen(fen)
         move_model = MoveDependencyModel(fen_model, 0)
         generated_moves = get_white_pawn_moves(move_model)
         tested_moves = [encrypt_move(move) for move in tested_values]
@@ -96,7 +96,7 @@ def black_pawn_moves_tests() -> UTestDataModel:
 def black_pawn_moves_length_tests() -> UTestDataModel:
     unit_tests: list[UnitTest] = []
     for index, (fen, tested_values) in enumerate(black_test_data.items()):
-        fen_model: Fen = decryptFen(fen)
+        fen_model: Fen = decrypt_fen(fen)
         move_model = MoveDependencyModel(fen_model, 0)
         moves_list_len = str(len(get_white_pawn_moves(move_model)))
         tested_values_len = str(len(tested_values))
@@ -109,7 +109,7 @@ def black_pawn_moves_tests() -> UTestDataModel:
     unit_tests: list[UnitTest] = []
     index: int = 1
     for fen, tested_values in black_test_data.items():
-        fen_model: Fen = decryptFen(fen)
+        fen_model: Fen = decrypt_fen(fen)
         move_model = MoveDependencyModel(fen_model, 0)
         generated_moves = get_white_pawn_moves(move_model)
         tested_moves = [encrypt_move(move) for move in tested_values]
