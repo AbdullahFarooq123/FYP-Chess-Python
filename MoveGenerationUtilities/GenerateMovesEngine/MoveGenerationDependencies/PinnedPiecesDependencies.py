@@ -47,7 +47,7 @@ def get_pinned_pieces(king_rays: int, player_pieces: list[int], king_position: P
 
 def validate_for_pinned(is_pinned: bool, move: Positions, attacker_rays: int) -> Positions:
     if is_pinned:
-        filtered_move: int = move.value & attacker_rays
+        filtered_move: int = square_bitmask[move.value] & attacker_rays
         if filtered_move:
             return Positions(filtered_move)
         else:

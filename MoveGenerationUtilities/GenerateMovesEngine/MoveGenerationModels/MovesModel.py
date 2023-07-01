@@ -26,7 +26,8 @@ class MoveDependencyModel:
         self.board_inverse = unsigned(~fen.game_board)
         # decide opponent and player pieces
         self.player_attr: PlayerAttribute = get_player_wise_pieces_and_sides(
-            white_pieces=fen.white_pieces, black_pieces=fen.black_pieces, turn=fen.player_turn)
+            white_pieces=fen.white_pieces, white_state=fen.white_board, black_pieces=fen.black_pieces,
+            black_state=fen.black_board, turn=fen.player_turn)
         # get the bitmask of player's king
         self.opponent_sliding_pieces = get_sliding_pieces(piece_list=self.player_attr.opponent_pieces)
         self.opponent_sliding_pieces_list = get_sliding_pieces_list(piece_list=self.player_attr.opponent_pieces)

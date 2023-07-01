@@ -1,6 +1,10 @@
+from sqlite3 import Cursor
+
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
+from Migrations.BaseModel import BaseModelClass
+from Migrations.Models.SquareBitmaskModel import SquareBitmaskModelClass
 from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import move_bit
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import directional_rays, square_bitmask
 

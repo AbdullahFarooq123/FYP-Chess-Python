@@ -6,8 +6,8 @@ from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_b
 class PinnedPiece:
     def __init__(self):
         self.pinned_pieces: int = 0
-        self.attacker_rays: int = 0
+        self.attackers_ray: int = 0
 
     def add_piece(self, pinned_piece_position: Positions, attacker_ray: int):
         self.pinned_pieces |= square_bitmask[pinned_piece_position.value]
-        self.attacker_rays |= attacker_ray
+        self.attackers_ray |= attacker_ray

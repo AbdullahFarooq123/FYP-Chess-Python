@@ -17,10 +17,13 @@ def get_sliding_pieces_list(piece_list: list) -> list[int]:
             piece_list[PieceName.QUEEN.value]]
 
 
-def get_player_wise_pieces_and_sides(white_pieces: list, black_pieces: list, turn: PlayerSide) -> PlayerAttribute:
-    return PlayerAttribute(player_pieces=black_pieces, player_side=PlayerSide.BLACK, opponent_pieces=white_pieces,
+def get_player_wise_pieces_and_sides(white_pieces: list, white_state: int, black_pieces: list, black_state: int,
+                                     turn: PlayerSide) -> PlayerAttribute:
+    return PlayerAttribute(player_pieces=black_pieces, player_state=black_state, player_side=PlayerSide.BLACK,
+                           opponent_pieces=white_pieces, opponent_state=white_state,
                            opponent_side=PlayerSide.WHITE) if turn == PlayerSide.BLACK else PlayerAttribute(
-        player_pieces=white_pieces, player_side=PlayerSide.WHITE, opponent_pieces=black_pieces,
+        player_pieces=white_pieces, player_state=white_state, player_side=PlayerSide.WHITE,
+        opponent_pieces=black_pieces, opponent_state=black_state,
         opponent_side=PlayerSide.BLACK)
 
 

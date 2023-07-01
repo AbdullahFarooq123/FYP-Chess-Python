@@ -1,13 +1,14 @@
-from ctypes import c_uint64
+from ctypes import c_uint64, c_uint32
 
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
 from MoveGenerationUtilities.Const import right_edge, left_edge, top_edge, bottom_edge
+from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.PreCalculationDependencies import setOccupancy
 from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import count_set_bits, bitmask, move_bit, \
     unsigned
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import rook_attack_count, rook_magic_number, \
-    rook_attacks, rook_attacks_table
+    rook_attacks, rook_attacks_table, square_bitmask
 
 
 def init_rook_attack_mask():
@@ -69,3 +70,15 @@ def get_rook_attacks(position: int, occupancy: int) -> int:
     occupancy = c_uint64(c_uint64(rook_magic_number[position]).value * occupancy).value
     occupancy = c_uint64(c_uint64(occupancy).value >> (64 - rook_attack_count[position])).value
     return unsigned(rook_attacks_table[position][occupancy])
+
+
+def get_rook_magic_index_and_attack(position: Positions) -> [int, int]:
+    attack_mask = rook_attacks[position.value]
+    relevant_bits = count_set_bits(attack_mask)
+    occupancy_indices = square_bitmask[relevant_bits]
+    for index in range(occupancy_indices):
+        occupancy = setOccupancy(index, relevant_bits, attack_mask)
+        magic_index = c_uint32(c_uint64(occupancy * rook_magic_number[position.value]).value >> (
+                64 - rook_attack_count[position.value])).value
+        yield magic_index, get_rook_attack_mask_inc_end_blockers(
+            position, occupancy)
