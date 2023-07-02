@@ -1,4 +1,4 @@
-from DebugUtilities.BeautifyDependency.GameBeautify import get_binary
+from DebugUtilities.BeautifyDependency.GameBeautify import get_binary, print_bitboard
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
@@ -16,7 +16,9 @@ from UnitTests.UnitTestModels.UnitTestSectionModel import UTestSectionModel
 def run_directional_rays_tests() -> UTestSectionModel:
     rays_generation_tests = directional_rays_generation_tests()
     rays_generated_tests = directional_rays_generated_tests()
-    return UTestSectionModel('Directional Rays Tests', [rays_generation_tests, rays_generated_tests])
+    rays_migration_tests = directional_rays_migration_tests()
+    return UTestSectionModel('Directional Rays Tests',
+                             [rays_generation_tests, rays_generated_tests, rays_migration_tests])
 
 
 def directional_rays_generation_tests() -> UTestDataModel:
@@ -43,3 +45,32 @@ def directional_rays_generated_tests() -> UTestDataModel:
                 assert_case(tested_ray, calculated_ray, index + 1))
             index += 1
     return UTestDataModel(test_case_title='Directional Rays Generated Tests', test_cases=unit_tests)
+
+
+def directional_rays_migration_tests() -> UTestDataModel:
+    from MoveGenerationUtilities.Migrations.Models.GameDependencies.DirectionalRayModel import DirectionalRayModelClass
+    from sqlite3 import Cursor
+    from MoveGenerationUtilities.Migrations.RunMigrations import Migrations
+    from MoveGenerationUtilities.Migrations.BaseModel import BaseModelClass
+    cursor: Cursor = Migrations.get_cursor()
+    directional_ray_model: BaseModelClass = DirectionalRayModelClass(cursor)
+    unit_tests: list[UnitTest] = []
+    index = 0
+    for direction in list(SpecificDirections)[:8]:
+        for position in list(Positions)[:-1]:
+            db_ray, = directional_ray_model.run_select_one(
+                select_col=f'{DirectionalRayModelClass.Columns.Ray.value}',
+                where_clause=f'''WHERE 
+                                    {DirectionalRayModelClass.Columns.Direction.value} = "{direction.name}" AND 
+                                    {DirectionalRayModelClass.Columns.Position.value} = "{position.name}"
+                                '''
+            )
+            db_ray = int(db_ray)
+            calculated_ray = get_binary(db_ray)
+            tested_ray = flatten_position(tested_directional_rays[direction.name][position.name])
+            if calculated_ray != tested_ray:
+                print_bitboard(db_ray)
+            unit_tests.append(
+                assert_case(tested_ray, calculated_ray, index + 1))
+            index += 1
+    return UTestDataModel(test_case_title='Directional Rays Migrations Tests', test_cases=unit_tests)

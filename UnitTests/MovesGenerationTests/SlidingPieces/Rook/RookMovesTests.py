@@ -28,8 +28,8 @@ def rook_moves_length_tests() -> UTestDataModel:
         # print_fen_board(fen)
         moves_list_len = str(len(get_rook_moves(move_model)))
         tested_values_len = str(len(tested_values))
-        if moves_list_len != tested_values_len:
-            print(fen)
+        # if moves_list_len != tested_values_len:
+        #     print(fen)
         unit_tests.append(
             assert_case(tested_values_len, moves_list_len, index + 1))
     return UTestDataModel(test_case_title='Rook Move Count Tests', test_cases=unit_tests)
@@ -40,9 +40,9 @@ def rook_moves_tests() -> UTestDataModel:
     index: int = 1
     for fen, tested_values in white_rook_test_data.items():
         fen_model: Fen = decrypt_fen(fen)
-        if fen in ['3k4/8/8/8/8/R4n2/8/R2QK3 w - - 0 1', '3k4/8/8/8/8/6b1/6R1/3QK3 w - - 0 1',
-                   '4k3/8/8/8/7b/8/5R2/4K3 w - - 0 1']:
-            print_fen_board(fen)
+        # if fen in ['3k4/8/8/8/8/R4n2/8/R2QK3 w - - 0 1', '3k4/8/8/8/8/6b1/6R1/3QK3 w - - 0 1',
+        #            '4k3/8/8/8/7b/8/5R2/4K3 w - - 0 1']:
+        #     print_fen_board(fen)
         move_model = MoveDependencyModel(fen_model, 0)
         generated_moves = get_rook_moves(move_model)
         tested_moves = [encrypt_move(move) for move in tested_values]

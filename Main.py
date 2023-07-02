@@ -1,4 +1,4 @@
-from Migrations.RunMigrations import Migrations
+from MoveGenerationUtilities.Migrations.RunMigrations import Migrations
 
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask
 from UnitTests.UnitTestDependencies import TestsOf
@@ -29,5 +29,5 @@ def run_testing():
 
 
 # run_testing()
-# run_unit_test()
-run_migrations()
+run_unit_test()
+# run_migrations()

@@ -334,14 +334,8 @@ def get_rook_moves(move_model: MoveDependencyModel) -> list[int]:
         rook_position: Positions = Positions(rook_mask)
         is_pinned: bool = bool(rook_mask & move_model.pinned_pieces.pinned_pieces)
         rook_attack: int = get_rook_attacks(position=rook_position.value, occupancy=move_model.fen.game_board)
-        # print_bitboard(move_model.fen.game_board)
-        # print_bitboard(rook_mask)
-        # print_bitboard(rook_attack)
         rook_attack &= unsigned(~move_model.player_attr.player_state)
         if move_model.attack_on_king_attr.check_count == 1:
-            print_bitboard(rook_attack)
-            print_bitboard(move_model.attack_on_king_attr.attackers_ray)
-            print_bitboard(move_model.attack_on_king_attr.attackers_bitmask)
             rook_attack &= move_model.attack_on_king_attr.attackers_ray
             rook_attack &= move_model.attack_on_king_attr.attackers_bitmask
         if is_pinned:

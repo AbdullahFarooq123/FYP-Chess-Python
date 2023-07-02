@@ -92,12 +92,12 @@ def get_bishop_magic_index_and_attack(position: Positions) -> [int, int]:
 
 
 def get_bishop_attack_mig(position: int, occupancy: int):
-    from Migrations.BaseModel import BaseModelClass
-    from Migrations.Models.SlidingPieces.Bishop.BishopAttackExcEndsModel import BishopAttackExcEndsModelClass
-    from Migrations.RunMigrations import Migrations
-    from Migrations.Models.SlidingPieces.Bishop.BishopAttackCountModel import BishopAttackCountModelClass
-    from Migrations.Models.SlidingPieces.Bishop.BishopMagicNumberModel import BishopMagicNumberModelClass
-    from Migrations.Models.SlidingPieces.Bishop.BishopAttackTableModel import BishopAttackTableModelClass
+    from MoveGenerationUtilities.Migrations.BaseModel import BaseModelClass
+    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackExcEndsModel import BishopAttackExcEndsModelClass
+    from MoveGenerationUtilities.Migrations.RunMigrations import Migrations
+    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackCountModel import BishopAttackCountModelClass
+    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopMagicNumberModel import BishopMagicNumberModelClass
+    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackTableModel import BishopAttackTableModelClass
     cursor: Cursor = Migrations.get_cursor()
     bishop_model: BaseModelClass = BishopAttackExcEndsModelClass(con_cursor=cursor)
     bishop_attack, = bishop_model.run_select_one(
