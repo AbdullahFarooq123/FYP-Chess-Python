@@ -10,7 +10,7 @@ class BishopAttackCountModelClass(BaseModelClass):
     class Columns(Enum):
         Id = 'Id'
         Position = 'Position'
-        Value = 'Value'
+        Count = 'Count'
 
     table_name = 'BishopAttackCount'
     create_query = f'''CREATE TABLE {table_name} (
@@ -19,7 +19,7 @@ class BishopAttackCountModelClass(BaseModelClass):
                                                     NOT NULL,
                                     {Columns.Position.value} TEXT REFERENCES Positions (Id) 
                                                          NOT NULL,
-                                    {Columns.Value.value} INTEGER NOT NULL
+                                    {Columns.Count.value} INTEGER NOT NULL
                                 );'''
 
     def __init__(self, con_cursor: Cursor):
@@ -31,7 +31,7 @@ class BishopAttackCountModelClass(BaseModelClass):
             attack_count = bishop_attack_count[position.value]
             query = f'''
                                     INSERT INTO {self.table_name} 
-                                    ({self.Columns.Position.value}, {self.Columns.Value.value}) 
+                                    ({self.Columns.Position.value}, {self.Columns.Count.value}) 
                                     VALUES 
                                     ("{position.name}", {attack_count})
                                 '''

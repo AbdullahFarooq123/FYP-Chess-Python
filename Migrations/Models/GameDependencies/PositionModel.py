@@ -5,7 +5,7 @@ from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Po
 from Migrations.BaseModel import BaseModelClass
 
 
-class PositionsModelClass(BaseModelClass):
+class PositionModelClass(BaseModelClass):
     class Columns(Enum):
         Id = 'Id'
         Position = 'Position'
@@ -26,7 +26,7 @@ class PositionsModelClass(BaseModelClass):
     def init_table(self):
         for position in Positions:
             query = f'''
-                INSERT INTO {PositionsModelClass.table_name} 
+                INSERT INTO {PositionModelClass.table_name} 
                     ({self.Columns.Position.value}) 
                 VALUES 
                     ("{position.name}")
