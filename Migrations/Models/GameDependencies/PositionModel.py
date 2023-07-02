@@ -11,12 +11,19 @@ class PositionModelClass(BaseModelClass):
         Position = 'Position'
 
     table_name = 'Positions'
-    create_query = f'''CREATE TABLE {table_name} (
-                                                    {Columns.Id.value}       INTEGER PRIMARY KEY ASC ON CONFLICT ROLLBACK AUTOINCREMENT
-                                                                     UNIQUE ON CONFLICT ROLLBACK
-                                                                     NOT NULL ON CONFLICT ROLLBACK,
-                                                    {Columns.Position.value} TEXT    UNIQUE ON CONFLICT ROLLBACK
-                                                                     NOT NULL ON CONFLICT ROLLBACK
+    create_query = f'''CREATE TABLE {table_name} 
+                                                (
+                                                    {Columns.Id.value}       
+                                                        INTEGER 
+                                                        PRIMARY KEY 
+                                                        ASC ON CONFLICT ROLLBACK 
+                                                        AUTOINCREMENT
+                                                        UNIQUE ON CONFLICT ROLLBACK
+                                                        NOT NULL ON CONFLICT ROLLBACK,
+                                                    {Columns.Position.value} 
+                                                        TEXT    
+                                                        UNIQUE ON CONFLICT ROLLBACK
+                                                        NOT NULL ON CONFLICT ROLLBACK
                                                 );'''
 
     def __init__(self, con_cursor: Cursor):
@@ -27,8 +34,12 @@ class PositionModelClass(BaseModelClass):
         for position in Positions:
             query = f'''
                 INSERT INTO {PositionModelClass.table_name} 
-                    ({self.Columns.Position.value}) 
+                (
+                    {self.Columns.Position.value}
+                ) 
                 VALUES 
-                    ("{position.name}")
+                (
+                    "{position.name}"
+                )
                 '''
             self.con_cursor.executescript(query)

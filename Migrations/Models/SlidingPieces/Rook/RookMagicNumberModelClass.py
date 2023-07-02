@@ -9,15 +9,22 @@ from MoveGenerationUtilities.PreCalculations.PreCalculationsData import rook_mag
 class RookMagicNumberModelClass(BaseModelClass):
     class Columns(Enum):
         Id = 'Id'
-        Value = 'Value'
+        MagicNumber = 'MagicNumber'
 
     table_name = 'RookMagicNumber'
-    create_query = f'''CREATE TABLE {table_name} (
-                                                        {Columns.Id.value} INTEGER PRIMARY KEY
-                                                                        UNIQUE
-                                                                        NOT NULL,
-                                                        {Columns.Value.value}   INTEGER NOT NULL
-                                                    );'''
+    create_query = f'''CREATE TABLE {table_name} 
+                                                (
+                                                    {Columns.Id.value} 
+                                                        INTEGER 
+                                                        PRIMARY KEY
+                                                        ASC ON CONFLICT ROLLBACK 
+                                                        AUTOINCREMENT
+                                                        UNIQUE ON CONFLICT ROLLBACK 
+                                                        NOT NULL ON CONFLICT ROLLBACK,
+                                                    {Columns.MagicNumber.value}   
+                                                        INTEGER 
+                                                        NOT NULL ON CONFLICT ROLLBACK
+                                                );'''
 
     def __init__(self, con_cursor: Cursor):
         super().__init__(self.table_name, self.create_query, con_cursor)
@@ -28,8 +35,14 @@ class RookMagicNumberModelClass(BaseModelClass):
             magic_number = rook_magic_number[position.value]
             query = f'''
                     INSERT INTO {self.table_name} 
-                        ({self.Columns.Id.value}, {self.Columns.Value.value})
+                    (
+                        {self.Columns.Id.value}, 
+                        {self.Columns.MagicNumber.value}
+                    )
                     VALUES 
-                        ({position.value}, {magic_number})
+                    (
+                        {position.value}, 
+                        {magic_number}
+                    )
                     '''
             self.con_cursor.execute(query)

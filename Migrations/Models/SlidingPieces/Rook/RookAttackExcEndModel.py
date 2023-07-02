@@ -3,23 +3,34 @@ from sqlite3 import Cursor
 
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
 from Migrations.BaseModel import BaseModelClass
+from Migrations.Models.GameDependencies.PositionModel import PositionModelClass
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import rook_attacks
 
 
-class RookAttacksModelClass(BaseModelClass):
+class RookAttackExcEndModelClass(BaseModelClass):
     class Columns(Enum):
         Id = 'Id'
         Position = 'Position'
-        Value = 'Value'
+        AttackMap = 'AttackMap'
 
-    table_name = 'RookAttacks'
-    create_query = f'''CREATE TABLE {table_name} (
-                                        {Columns.Id.value} INTEGER PRIMARY KEY ASC ON CONFLICT ROLLBACK AUTOINCREMENT
-                                                         UNIQUE
-                                                         NOT NULL,
-                                        {Columns.Position.value} TEXT    REFERENCES Positions (Id) 
-                                                         NOT NULL,
-                                        {Columns.Value.value}    INTEGER NOT NULL
+    table_name = 'RookAttackExcEnd'
+    create_query = f'''CREATE TABLE {table_name} 
+                                                (
+                                                    {Columns.Id.value} 
+                                                        INTEGER 
+                                                        PRIMARY KEY 
+                                                        ASC ON CONFLICT ROLLBACK 
+                                                        AUTOINCREMENT
+                                                        UNIQUE ON CONFLICT ROLLBACK 
+                                                        NOT NULL ON CONFLICT ROLLBACK,
+                                                    {Columns.Position.value} 
+                                                        TEXT    
+                                                        REFERENCES {PositionModelClass.table_name} 
+                                                            ({PositionModelClass.Columns.Position.value}) 
+                                                        NOT NULL ON CONFLICT ROLLBACK,
+                                                    {Columns.AttackMap.value}    
+                                                        INTEGER 
+                                                        NOT NULL ON CONFLICT ROLLBACK
                                                 );'''
 
     def __init__(self, con_cursor: Cursor):
@@ -31,8 +42,14 @@ class RookAttacksModelClass(BaseModelClass):
             ray = rook_attacks[position.value]
             query = f'''
                         INSERT INTO {self.table_name} 
-                        ({self.Columns.Position.value}, {self.Columns.Value.value}) 
+                        (
+                            {self.Columns.Position.value}, 
+                            {self.Columns.AttackMap.value}
+                        ) 
                         VALUES 
-                        ("{position.name}", {ray})
+                        (
+                            "{position.name}", 
+                             {ray}
+                        )
                     '''
             self.con_cursor.executescript(query)

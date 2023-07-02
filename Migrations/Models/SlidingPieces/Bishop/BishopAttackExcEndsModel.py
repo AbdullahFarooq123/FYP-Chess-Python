@@ -3,11 +3,11 @@ from sqlite3 import Cursor
 
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
 from Migrations.BaseModel import BaseModelClass
-from Migrations.Models.GameDependencies.PositionsModel import PositionModelClass
+from Migrations.Models.GameDependencies.PositionModel import PositionModelClass
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import bishop_attacks
 
 
-class BishopAttacksExcEndsModelClass(BaseModelClass):
+class BishopAttackExcEndsModelClass(BaseModelClass):
     class Columns(Enum):
         Id = 'Id'
         Position = 'Position'
@@ -41,7 +41,7 @@ class BishopAttacksExcEndsModelClass(BaseModelClass):
         for position in list(Positions)[:-1]:
             ray = bishop_attacks[position.value]
             query = f'''
-                        INSERT INTO {BishopAttacksExcEndsModelClass.table_name} 
+                        INSERT INTO {BishopAttackExcEndsModelClass.table_name} 
                         (
                             {self.Columns.Position.value}, 
                             {self.Columns.AttackMap.value}

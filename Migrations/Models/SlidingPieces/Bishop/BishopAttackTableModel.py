@@ -3,7 +3,7 @@ from sqlite3 import Cursor
 
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
 from Migrations.BaseModel import BaseModelClass
-from Migrations.Models.GameDependencies.PositionsModel import PositionModelClass
+from Migrations.Models.GameDependencies.PositionModel import PositionModelClass
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPieces.Bishop import \
     get_bishop_magic_index_and_attack
 
