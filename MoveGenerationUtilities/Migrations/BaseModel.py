@@ -35,7 +35,10 @@ class BaseModelClass:
     def run_select_one(self, select_col: str = '*', where_clause: str = ''):
         query = self.__create_select_query(select_col=select_col, where_clause=where_clause)
         self.con_cursor.execute(query)
-        return self.con_cursor.fetchone()
+        val = self.con_cursor.fetchone()
+        if val is None:
+            print(query)
+        return val
 
     def print_select(self):
         print(self.run_select_all())

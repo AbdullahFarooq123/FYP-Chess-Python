@@ -14,3 +14,8 @@ class Castle:
     def can_king_side_castle(self) -> bool:
         return bool(self.__castle_rights & 0b1)
 
+    def remove_king_side_rights(self):
+        self.__castle_rights &= 0b0
+
+    def remove_queen_side_rights(self):
+        self.__castle_rights &= 0b10

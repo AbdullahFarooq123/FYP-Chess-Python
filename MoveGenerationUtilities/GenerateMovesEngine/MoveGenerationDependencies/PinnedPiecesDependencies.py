@@ -31,10 +31,10 @@ def get_pinned_pieces(king_rays: int, player_pieces: list[int], king_position: P
                                                            p2_position_wrt_p1=relative_dir_to_opponent_piece.p2_position_wrt_p1,
                                                            p1_position_wrt_p2=relative_dir_to_player_piece.p2_position_wrt_p1):
                         opponent_piece_ray_in_king_dir = \
-                            directional_rays[relative_dir_to_opponent_piece.p2_position_wrt_p1.value][
+                            directional_rays[relative_dir_to_opponent_piece.p1_position_wrt_p2.value][
                                 opponent_piece_position.value]
                         player_piece_ray_in_opponent_piece_dir = \
-                            directional_rays[relative_dir_to_player_piece.p1_position_wrt_p2.value][
+                            directional_rays[relative_dir_to_player_piece.p2_position_wrt_p1.value][
                                 player_piece_position.value]
                         pinned_piece_model.add_piece(player_piece_position,
                                                      (

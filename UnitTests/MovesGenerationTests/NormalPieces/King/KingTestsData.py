@@ -196,105 +196,10 @@ white_king_test_data = {
     # 4 .  .  .  .  .  .  b  .
     # 3 .  .  .  .  .  .  .  .
     # 2 .  .  .  .  .  .  .  .
-    # 1 R .  .  .  K  .  .  .
+    # 1 R  .  .  .  K  .  .  .
     #   a  b  c  d  e  f  g  h
 
     '4k3/8/3r1r2/8/6b1/8/8/R3K3 w - - 0 1': [],
-
-    # 8 .  .  .  .  k  .  .  .
-    # 7 .  .  .  .  .  .  .  .
-    # 6 .  .  .  .  .  .  .  .
-    # 5 .  .  .  .  .  .  .  .
-    # 4 .  .  .  .  .  .  .  .
-    # 3 .  .  .  .  K  .  .  .
-    # 2 .  .  .  .  .  .  .  .
-    # 1 R  .  .  .  .  .  .  .
-    #   a  b  c  d  e  f  g  h
-
-    'r3k3/8/8/8/8/8/8/4K3 w - - 0 1': [
-        {
-            'SOURCE_SQUARE': Positions.e3,
-            'TARGET_SQUARE': Positions.e2,
-            'PIECE_NAME': PieceName.KING,
-            'PROMOTION_PIECE_NAME': PieceName.NONE,
-            'CAPTURE_FLAG': False,
-            'DOUBLE_PUSH_FLAG': False,
-            'EN_PASSANT_FLAG': False,
-            'CASTLE_FLAG': False,
-        },
-        {
-            'SOURCE_SQUARE': Positions.e3,
-            'TARGET_SQUARE': Positions.d2,
-            'PIECE_NAME': PieceName.KING,
-            'PROMOTION_PIECE_NAME': PieceName.NONE,
-            'CAPTURE_FLAG': False,
-            'DOUBLE_PUSH_FLAG': False,
-            'EN_PASSANT_FLAG': False,
-            'CASTLE_FLAG': False,
-        },
-        {
-            'SOURCE_SQUARE': Positions.e3,
-            'TARGET_SQUARE': Positions.f2,
-            'PIECE_NAME': PieceName.KING,
-            'PROMOTION_PIECE_NAME': PieceName.NONE,
-            'CAPTURE_FLAG': False,
-            'DOUBLE_PUSH_FLAG': False,
-            'EN_PASSANT_FLAG': False,
-            'CASTLE_FLAG': False,
-        },
-
-        {
-            'SOURCE_SQUARE': Positions.e3,
-            'TARGET_SQUARE': Positions.d3,
-            'PIECE_NAME': PieceName.KING,
-            'PROMOTION_PIECE_NAME': PieceName.NONE,
-            'CAPTURE_FLAG': False,
-            'DOUBLE_PUSH_FLAG': False,
-            'EN_PASSANT_FLAG': False,
-            'CASTLE_FLAG': False,
-        },
-        {
-            'SOURCE_SQUARE': Positions.e3,
-            'TARGET_SQUARE': Positions.f3,
-            'PIECE_NAME': PieceName.KING,
-            'PROMOTION_PIECE_NAME': PieceName.NONE,
-            'CAPTURE_FLAG': False,
-            'DOUBLE_PUSH_FLAG': False,
-            'EN_PASSANT_FLAG': False,
-            'CASTLE_FLAG': False,
-        },
-        {
-            'SOURCE_SQUARE': Positions.e3,
-            'TARGET_SQUARE': Positions.e4,
-            'PIECE_NAME': PieceName.KING,
-            'PROMOTION_PIECE_NAME': PieceName.NONE,
-            'CAPTURE_FLAG': False,
-            'DOUBLE_PUSH_FLAG': False,
-            'EN_PASSANT_FLAG': False,
-            'CASTLE_FLAG': False,
-        },
-        {
-            'SOURCE_SQUARE': Positions.e3,
-            'TARGET_SQUARE': Positions.d4,
-            'PIECE_NAME': PieceName.KING,
-            'PROMOTION_PIECE_NAME': PieceName.NONE,
-            'CAPTURE_FLAG': False,
-            'DOUBLE_PUSH_FLAG': False,
-            'EN_PASSANT_FLAG': False,
-            'CASTLE_FLAG': False,
-        },
-        {
-            'SOURCE_SQUARE': Positions.e3,
-            'TARGET_SQUARE': Positions.f4,
-            'PIECE_NAME': PieceName.KING,
-            'PROMOTION_PIECE_NAME': PieceName.NONE,
-            'CAPTURE_FLAG': False,
-            'DOUBLE_PUSH_FLAG': False,
-            'EN_PASSANT_FLAG': False,
-            'CASTLE_FLAG': False,
-        },
-
-    ],
     # Capture Move
     # 8 .  .  .  .  k  .  .  .
     # 7 .  .  .  .  .  .  .  .

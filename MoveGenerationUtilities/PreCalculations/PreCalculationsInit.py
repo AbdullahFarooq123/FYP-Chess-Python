@@ -12,7 +12,6 @@ from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPie
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPieces.Rook import init_rook_attack_mask
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SquareBitmaskDependencies import init_squares
 
-
 def init_attacks(load_pre_cal_algo: bool = False):
     if load_pre_cal_algo:
         init_squares()
@@ -23,5 +22,6 @@ def init_attacks(load_pre_cal_algo: bool = False):
         init_rook_attack_mask()
         init_bishop_attack_mask()
         init_magic_numbers()
+
     init_slider_attacks(True)
     init_slider_attacks(False)

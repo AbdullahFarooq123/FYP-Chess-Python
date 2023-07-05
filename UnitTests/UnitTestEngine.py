@@ -1,3 +1,4 @@
+from GameSettings import use_db
 from MoveGenerationUtilities.PreCalculations.PreCalculationsInit import init_attacks
 from UnitTests.MovesGenerationTests import MoveGenerationTest
 from UnitTests.UnitTestDependencies import TestsOf
@@ -16,7 +17,8 @@ class UnitTestEngine:
         self.show_only_tests = show_only_tests
 
     def run_tests(self):
-        init_attacks()
+        if not use_db:
+            init_attacks()
         self.test_results += PreCalculationTests.run_tests()
         self.test_results += MoveGenerationTest.run_tests()
 

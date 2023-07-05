@@ -4,6 +4,7 @@ from sqlite3 import Cursor
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
+from GameSettings import use_db
 from MoveGenerationUtilities.Const import right_edge, left_edge, top_edge, bottom_edge
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.PreCalculationDependencies import setOccupancy
 from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import count_set_bits, bitmask, move_bit, \
@@ -67,11 +68,28 @@ def get_bishop_attack_mask_inc_end_blockers(piece_position: Positions, blockers_
 
 
 def get_bishop_attacks(position: int, occupancy: int):
-    occupancy = get_bishop_occupancy(position, occupancy)
-    return unsigned(bishop_attacks_table[position][occupancy])
+    magic_index = get_bishop_magic_index(position, occupancy)
+    if not use_db:
+        attack = bishop_attacks_table[position][magic_index]
+    else:
+        from MoveGenerationUtilities.Migrations.RunMigrations import Migrations
+        from MoveGenerationUtilities.Migrations.BaseModel import BaseModelClass
+        from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackTableModel import \
+            BishopAttackTableModelClass
+        cursor: Cursor = Migrations.get_cursor()
+        bishop_attack: BaseModelClass = BishopAttackTableModelClass(cursor)
+        attack, = bishop_attack.run_select_one(select_col=BishopAttackTableModelClass.Columns.AttackMap.value,
+                                               where_clause=f'''
+                                    WHERE 
+                                        {BishopAttackTableModelClass.Columns.Position.value} = "{Positions(position).name}" 
+                                    AND 
+                                        {BishopAttackTableModelClass.Columns.MagicIndex.value} = {magic_index}
+                                    ''')
+        attack = int(attack)
+    return unsigned(attack)
 
 
-def get_bishop_occupancy(position: int, occupancy: int) -> int:
+def get_bishop_magic_index(position: int, occupancy: int) -> int:
     occupancy = c_uint64(occupancy).value
     occupancy = c_uint64(c_uint64(bishop_attacks[position]).value & occupancy).value
     occupancy = c_uint64(c_uint64(bishop_magic_number[position]).value * occupancy).value
@@ -93,11 +111,15 @@ def get_bishop_magic_index_and_attack(position: Positions) -> [int, int]:
 
 def get_bishop_attack_mig(position: int, occupancy: int):
     from MoveGenerationUtilities.Migrations.BaseModel import BaseModelClass
-    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackExcEndsModel import BishopAttackExcEndsModelClass
+    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackExcEndsModel import \
+        BishopAttackExcEndsModelClass
     from MoveGenerationUtilities.Migrations.RunMigrations import Migrations
-    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackCountModel import BishopAttackCountModelClass
-    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopMagicNumberModel import BishopMagicNumberModelClass
-    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackTableModel import BishopAttackTableModelClass
+    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackCountModel import \
+        BishopAttackCountModelClass
+    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopMagicNumberModel import \
+        BishopMagicNumberModelClass
+    from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackTableModel import \
+        BishopAttackTableModelClass
     cursor: Cursor = Migrations.get_cursor()
     bishop_model: BaseModelClass = BishopAttackExcEndsModelClass(con_cursor=cursor)
     bishop_attack, = bishop_model.run_select_one(

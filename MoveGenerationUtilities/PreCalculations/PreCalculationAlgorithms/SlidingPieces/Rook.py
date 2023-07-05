@@ -1,8 +1,10 @@
 from ctypes import c_uint64, c_uint32
+from sqlite3 import Cursor
 
 from DebugUtilities.GameDependency.BoardDependency.DirectionalDependency.SpecificDirectionDependency import \
     SpecificDirections
 from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
+from GameSettings import use_db
 from MoveGenerationUtilities.Const import right_edge, left_edge, top_edge, bottom_edge
 from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.PreCalculationDependencies import setOccupancy
 from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import count_set_bits, bitmask, move_bit, \
@@ -69,7 +71,24 @@ def get_rook_attacks(position: int, occupancy: int) -> int:
     occupancy = c_uint64(c_uint64(rook_attacks[position]).value & occupancy).value
     occupancy = c_uint64(c_uint64(rook_magic_number[position]).value * occupancy).value
     occupancy = c_uint64(c_uint64(occupancy).value >> (64 - rook_attack_count[position])).value
-    return unsigned(rook_attacks_table[position][occupancy])
+    if not use_db:
+        attack = rook_attacks_table[position][occupancy]
+    else:
+        from MoveGenerationUtilities.Migrations.RunMigrations import Migrations
+        from MoveGenerationUtilities.Migrations.BaseModel import BaseModelClass
+        from MoveGenerationUtilities.Migrations.Models.SlidingPieces.Bishop.BishopAttackTableModel import \
+            BishopAttackTableModelClass
+        cursor: Cursor = Migrations.get_cursor()
+        bishop_attack: BaseModelClass = BishopAttackTableModelClass(cursor)
+        attack, = bishop_attack.run_select_one(select_col=BishopAttackTableModelClass.Columns.AttackMap.value,
+                                               where_clause=f'''
+                                    WHERE 
+                                        {BishopAttackTableModelClass.Columns.Position.value} = "{Positions(position).name}" 
+                                    AND 
+                                        {BishopAttackTableModelClass.Columns.MagicIndex.value} = {occupancy}
+                                    ''')
+        attack = int(attack)
+    return unsigned(attack)
 
 
 def get_rook_magic_index_and_attack(position: Positions) -> [int, int]:

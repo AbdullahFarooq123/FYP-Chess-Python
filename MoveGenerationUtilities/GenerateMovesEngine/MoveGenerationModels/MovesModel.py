@@ -17,17 +17,21 @@ from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import u
 from MoveGenerationUtilities.PreCalculations.PreCalculationsData import rook_attacks, bishop_attacks
 
 
-class MoveDependencyModel:
-    def __init__(self, fen: Fen, previous_move: int):
-        self.fen = fen
-        self.white_castle = Castle(fen.white_castle)
-        self.black_castle = Castle(fen.black_castle)
-        self.previous_move = previous_move
-        self.board_inverse = unsigned(~fen.game_board)
+class GameStateModel:
+    def __init__(self, fen: Fen):
+        self.fen: Fen = fen
+        self.white_castle: Castle = Castle(self.fen.white_castle)
+        self.black_castle: Castle = Castle(self.fen.black_castle)
+        self.recalculate()
+
+    def recalculate(self, change_turn: bool = False):
+        if change_turn:
+            self.__change_turn()
+        self.board_inverse = unsigned(~self.fen.game_board)
         # decide opponent and player pieces
         self.player_attr: PlayerAttribute = get_player_wise_pieces_and_sides(
-            white_pieces=fen.white_pieces, white_state=fen.white_board, black_pieces=fen.black_pieces,
-            black_state=fen.black_board, turn=fen.player_turn)
+            white_pieces=self.fen.white_pieces, white_state=self.fen.white_board, black_pieces=self.fen.black_pieces,
+            black_state=self.fen.black_board, turn=self.fen.player_turn)
         # get the bitmask of player's king
         self.opponent_sliding_pieces = get_sliding_pieces(piece_list=self.player_attr.opponent_pieces)
         self.opponent_sliding_pieces_list = get_sliding_pieces_list(piece_list=self.player_attr.opponent_pieces)
@@ -44,5 +48,8 @@ class MoveDependencyModel:
             opponent_pieces=self.player_attr.opponent_pieces,
             player_king_mask=self.player_king_mask,
             opponent_side=self.player_attr.opponent_side,
-            board_state=fen.game_board,
+            board_state=self.fen.game_board,
             king_position=self.player_king_pos)
+
+    def __change_turn(self):
+        self.fen.player_turn = PlayerSide.BLACK if self.fen.player_turn is PlayerSide.WHITE else PlayerSide.WHITE
