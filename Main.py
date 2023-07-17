@@ -1,18 +1,17 @@
-from DebugUtilities.GameDependency.PieceDependency.PieceNameDependency import PieceName
-from FenUtilities.FenDecrypt import decrypt_fen
-from FenUtilities.FenModel import Fen
-from MoveGenerationUtilities.GenerateMovesEngine.MoveGenerationDependencies.GetAttackersDependencies import \
-    get_alignment_wrt_each_other
-from MoveGenerationUtilities.Migrations.RunMigrations import Migrations
-from MoveGenerationUtilities.PreCalculations.PreCalculationDependencies import get_least_bit_index
+import os
+import time
 
-from MoveGenerationUtilities.PreCalculations.PreCalculationsData import square_bitmask
-from UnitTests.UnitTestDependencies import TestsOf
-from UnitTests.UnitTestEngine import UnitTestEngine
-from DebugUtilities.BeautifyDependency.GameBeautify import print_bitboard, get_binary
-from DebugUtilities.GameDependency.BoardDependency.PositionsDependency import Positions
-from MoveGenerationUtilities.PreCalculations.PreCalculationAlgorithms.SlidingPieces.Bishop import \
-    get_bishop_attack_mask_inc_end_blockers
+from NeuralNetworks.StockFish import StockFishEngine
+from UnitTests.Enums.TestOfEnum import TestsOf
+from src.Controllers import PreCalculationsController
+from src.Helpers.FenHelpers.FenDecryptHelpers import decrypt_fen
+from src.Controllers.GenerateMovesController import get_moves_by_fen
+
+from UnitTests.Controllers.UnitTestController import UnitTestEngine
+from src.Helpers.BeautifyHelpers.GameBeautifyHelpers import print_moves, print_fen_board, print_game_board
+from src.Helpers.FenHelpers.FenEncryptHelpers import encrypt_fen
+from src.Helpers.PreCalculationHelpers.BitManipulationHelpers import unsigned, count_set_bits
+from src.Models.FenModel import Fen
 
 
 def run_unit_test():
@@ -23,13 +22,13 @@ def run_unit_test():
 
 
 def run_migrations():
-    Migrations().run_migrations()
+    PreCalculationsController.init_migrations()
 
 
 def run_testing():
-    mask = square_bitmask[Positions.e4.value]
-    print_bitboard(mask)
-    print_bitboard(mask<<8)
+    print(Fen.start_position)
+    fen = decrypt_fen(Fen.start_position)
+    print(encrypt_fen(fen))
 
 
 if __name__ == '__main__':
