@@ -1,4 +1,5 @@
 import numpy as numpy
+from typing import List
 
 from ChessEngine.src.Helpers.BeautifyHelpers.StringBeautifyHelpers import print_by_padding, pad_str_list
 from ChessEngine.src.Enums.PositionsEnum import Positions
@@ -84,7 +85,7 @@ def print_fen_board(fen: str):
     __print_files()
 
 
-def print_attack_map(attack_map: list[int]):
+def print_attack_map(attack_map: List[int]):
     for position in reversed(list(Positions)[:-1]):
         print(f'\'{position.name}\':')
         print('\'\'\'')

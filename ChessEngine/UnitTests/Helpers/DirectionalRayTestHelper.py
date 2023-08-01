@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import get_binary
 from ChessEngine.src.Enums.DirectionsEnum import \
     Direction
@@ -21,7 +23,7 @@ def run_directional_rays_tests() -> UTestSectionModel:
 
 
 def directional_rays_generation_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     index = 0
     for direction in list(Direction)[:8]:
         for position in list(Positions)[:-1]:
@@ -34,7 +36,7 @@ def directional_rays_generation_tests() -> UTestDataModel:
 
 
 def directional_rays_generated_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     index = 0
     for direction in list(Direction)[:8]:
         for position in list(Positions)[:-1]:

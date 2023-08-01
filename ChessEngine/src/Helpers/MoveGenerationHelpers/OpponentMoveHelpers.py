@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 from ChessEngine.src.Enums.DirectionsEnum import Direction
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
@@ -14,7 +16,7 @@ from ChessEngine.src.Root.PreCalculationsData import directional_rays, pawn_atta
 
 def get_opponent_attacks_and_find_check(opponent_pieces: list, player_king_mask: int, opponent_side: PlayerSide,
                                         board_state: int, player_king_position: Positions) -> AttackOnKing:
-    attackers: list[tuple[Positions, PieceName]] = []
+    attackers: List[Tuple[Positions, PieceName]] = []
     check_count: int = 0
     attackers_ray = 0
     attackers_mask = 0

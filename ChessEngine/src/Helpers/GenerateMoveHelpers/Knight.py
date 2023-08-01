@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
@@ -10,10 +12,10 @@ from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import
 from ChessEngine.src.Root.PreCalculationsData import square_bitmask
 
 
-def get_knight_moves(move_model: GameState) -> list[int]:
+def get_knight_moves(move_model: GameState) -> List[int]:
     knight: int = (move_model.fen.white_pieces if move_model.player_attr.player_side == PlayerSide.WHITE else
                    move_model.fen.black_pieces)[PieceName.KNIGHT.value]
-    knight_moves: list[int] = []
+    knight_moves: List[int] = []
     while knight:
         knight_position: Positions = Positions(get_least_bit_index(knight))
         knight_mask = square_bitmask[knight_position.value]

@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Helpers.FenHelpers.FenDecryptHelpers import decrypt_fen
 from ChessEngine.src.Models.FenModel import Fen
 from ChessEngine.src.Controllers.GenerateMovesController import get_rook_moves
@@ -21,7 +23,7 @@ invalid = ['3k4/8/8/r7/8/R3n3/8/R2QK3 w - - 0 1','3k4/8/8/r7/8/R3n3/8/R2QK3 w - 
 
 
 def rook_moves_length_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, (fen, tested_values) in enumerate(rook_move_generations.items()):
         fen_model: Fen = decrypt_fen(fen)
         move_model = GameState(fen_model)
@@ -35,7 +37,7 @@ def rook_moves_length_tests() -> UTestDataModel:
 
 
 def rook_moves_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     index: int = 1
     for fen, tested_values in rook_move_generations.items():
         fen_model: Fen = decrypt_fen(fen)

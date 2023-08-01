@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
@@ -12,7 +14,7 @@ def get_sliding_pieces(piece_list: list) -> int:
         piece_list[PieceName.QUEEN.value]
 
 
-def get_sliding_pieces_list(piece_list: list) -> list[int]:
+def get_sliding_pieces_list(piece_list: list) -> List[int]:
     return [piece_list[PieceName.BISHOP.value], piece_list[PieceName.ROOK.value],
             piece_list[PieceName.QUEEN.value]]
 

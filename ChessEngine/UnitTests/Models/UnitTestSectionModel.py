@@ -1,10 +1,12 @@
+from typing import List
+
 from ChessEngine.UnitTests.Enums.TestOfEnum import TestsOf
 from ChessEngine.src.Helpers.BeautifyHelpers.StringBeautifyHelpers import print_by_padding
 from ChessEngine.UnitTests.Models.UnitTestDataModel import UTestDataModel
 
 
 class UTestSectionModel:
-    def __init__(self, test_title: str, u_test_data: list[UTestDataModel]):
+    def __init__(self, test_title: str, u_test_data: List[UTestDataModel]):
         self.test_title = test_title
         self.u_test_data = u_test_data
         self.padding_length = 100
@@ -24,8 +26,8 @@ class UTestSectionModel:
                              padding_char_hor='~')
             print()
 
-    def _get_validated_data(self, show_only_tests: TestsOf) -> list[UTestDataModel]:
-        validated_data_models: list[UTestDataModel] = []
+    def _get_validated_data(self, show_only_tests: TestsOf) -> List[UTestDataModel]:
+        validated_data_models: List[UTestDataModel] = []
         for data_model in self.u_test_data:
             validated_test_cases = data_model.get_validated_tests(show_only_tests)
             if len(validated_test_cases) > 0:

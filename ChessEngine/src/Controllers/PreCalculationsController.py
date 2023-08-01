@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Helpers.BeautifyHelpers.StringBeautifyHelpers import get_str_list
 from ChessEngine.src.Helpers.PreCalculationHelpers.BishopPreCalHelpers import init_bishop_attack_count, \
     init_bishop_attack_mask_exc_ends
@@ -81,7 +83,7 @@ def init_migrations():
     __write_models(mig_list)
 
 
-def __write_models(model_list: list[tuple]):
+def __write_models(model_list: List[tuple]):
     models_str = ''
     file_path = f'{static_files_loc}\\PreCalculationsData.py'
     for model in model_list:

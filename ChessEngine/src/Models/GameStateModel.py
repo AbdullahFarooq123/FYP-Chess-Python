@@ -1,7 +1,8 @@
+from typing import List
+
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
 from ChessEngine.src.Enums.PositionsEnum import Positions
-from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import print_bitboard
 from ChessEngine.src.Helpers.MoveGenerationHelpers.MoveHelpers import \
     get_player_wise_pieces_and_sides, get_sliding_pieces, get_sliding_pieces_list
 from ChessEngine.src.Helpers.MoveGenerationHelpers.OpponentMoveHelpers import \
@@ -16,15 +17,13 @@ from ChessEngine.src.Models.FenModel import Fen
 from ChessEngine.src.Models.PinnedPieceModel import PinnedPiece
 from ChessEngine.src.Models.PlayerAttributesModel import PlayerAttribute
 
-print_bitboard
-
 
 class GameState:
     def __init__(self, fen: Fen):
         self.fen: Fen = fen
         self.white_castle: Castle = Castle(self.fen.white_castle)
         self.black_castle: Castle = Castle(self.fen.black_castle)
-        self.moves: list[int] = []
+        self.moves: List[int] = []
         self.recalculate()
 
     def recalculate(self, change_turn: bool = False):

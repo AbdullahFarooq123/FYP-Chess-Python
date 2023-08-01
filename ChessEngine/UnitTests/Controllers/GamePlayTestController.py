@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.UnitTests.Helpers.GamePlayTestHelper import get_test_games
 from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import print_moves, print_game_board, get_binary
 from ChessEngine.src.Helpers.FenHelpers.FenDecryptHelpers import decrypt_fen
@@ -20,7 +22,7 @@ def run_game_play_tests():
             'O-O': False
         }
     }
-    games: list[dict] = get_test_games()
+    games: List[dict] = get_test_games()
     count: int = 1
     for game in games:
         print(f'Game {count} started')

@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.UnitTests.TestData.RookTestData import rook_attacks_inc_ends, rook_attacks_exc_ends, rook_attack_counts
 from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import get_binary
 from ChessEngine.src.Enums.PositionsEnum import Positions
@@ -28,7 +30,7 @@ def run_rook_tests() -> UTestSectionModel:
 
 
 def rook_attack_count_generation_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_rook_attack_count = count_set_bits(get_rook_attack_mask_exc_ends(position))
         tested_rook_attack_mask = rook_attack_counts[position.value]
@@ -38,7 +40,7 @@ def rook_attack_count_generation_tests() -> UTestDataModel:
 
 
 def rook_attack_count_generated_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_rook_attack_count = rook_attack_count[position.value]
         tested_rook_attack_mask = rook_attack_counts[position.value]
@@ -48,7 +50,7 @@ def rook_attack_count_generated_tests() -> UTestDataModel:
 
 
 def rook_attack_exc_ends_generation_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_rook_attack_count = get_binary(get_rook_attack_mask_exc_ends(position))
         tested_rook_attack_mask = flatten_position(rook_attacks_exc_ends[position.name])
@@ -58,7 +60,7 @@ def rook_attack_exc_ends_generation_tests() -> UTestDataModel:
 
 
 def rook_attack_exc_ends_generated_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_rook_attack_count = get_binary(rook_attacks[position.value])
         tested_rook_attack_mask = flatten_position(rook_attacks_exc_ends[position.name])
@@ -68,7 +70,7 @@ def rook_attack_exc_ends_generated_tests() -> UTestDataModel:
 
 
 def rook_attack_inc_ends_generation_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_rook_attack_count = get_binary(get_rook_attack_mask_inc_end_blockers(position, 0))
         tested_rook_attack_mask = flatten_position(rook_attacks_inc_ends[position.name])
@@ -80,7 +82,7 @@ def rook_attack_inc_ends_generation_tests() -> UTestDataModel:
 
 def rook_attacks_table_test() -> UTestDataModel:
     init_slider_attacks(bishop=False)
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     index = 0
     for position in list(Positions)[:-1]:
         for blocker in range(4096):

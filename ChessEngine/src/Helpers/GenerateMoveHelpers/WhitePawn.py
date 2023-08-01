@@ -1,23 +1,23 @@
+from typing import List
+
 from ChessEngine.src.Enums.DirectionsEnum import \
     Direction
-from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
-from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import print_bitboard
-from ChessEngine.src.Root.Const import before_top_edge, before_bottom_edge
+from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Helpers.MoveEncryptionHelpers.EncodeMoveHelpers import encode_move
 from ChessEngine.src.Helpers.MoveGenerationHelpers.MoveHelpers import \
     get_enpassant_move
 from ChessEngine.src.Helpers.MoveGenerationHelpers.PinnedPieceHelpers import \
     validate_for_pinned
+from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import get_least_bit_index, \
+    move_bit_by_direction
 from ChessEngine.src.Models.GameStateModel import GameState
-from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import get_least_bit_index, move_bit_by_direction
+from ChessEngine.src.Root.Const import before_top_edge, before_bottom_edge
 from ChessEngine.src.Root.PreCalculationsData import square_bitmask, pawn_attack_maps
 
-print_bitboard
 
-
-def get_white_pawn_moves(move_model: GameState) -> list[int]:
+def get_white_pawn_moves(move_model: GameState) -> List[int]:
     pawn = move_model.fen.white_pieces[int(PieceName.PAWN.value)]
     pawn_moves = []
     # ===================================pawn moves===================================

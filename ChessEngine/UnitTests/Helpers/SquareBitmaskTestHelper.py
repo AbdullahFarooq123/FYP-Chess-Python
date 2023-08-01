@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import get_binary
 from ChessEngine.src.Enums.PositionsEnum import Positions
 
@@ -17,7 +19,7 @@ def run_square_bitmask_tests() -> UTestSectionModel:
 
 
 def square_bitmask_generation_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_bitmask = get_binary(bitmask(position.value))
         tested_bitmask = flatten_position(tested_square_bitmask[position.name])
@@ -27,7 +29,7 @@ def square_bitmask_generation_tests() -> UTestDataModel:
 
 
 def square_bitmask_generated_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_bitmask = get_binary(square_bitmask[position.value])
         tested_bitmask = flatten_position(tested_square_bitmask[position.name])

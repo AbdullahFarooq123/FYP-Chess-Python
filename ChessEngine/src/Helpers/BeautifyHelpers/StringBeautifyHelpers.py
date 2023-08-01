@@ -1,5 +1,7 @@
 from enum import Enum
 
+from typing import List
+
 
 class Justify(Enum):
     CENTER = 0
@@ -35,7 +37,7 @@ def print_by_padding(string: str, length: int, justify: Justify = Justify.CENTER
     print(pad_str(string, length, justify, start_end_only, padding_char_hor, padding_char_ver, sub_part))
 
 
-def pad_str_list(string_lst: list[str], total_length: int, justify: Justify = Justify.CENTER,
+def pad_str_list(string_lst: List[str], total_length: int, justify: Justify = Justify.CENTER,
                  padding_char_hor: str = '-',
                  padding_char_ver: str = '+') -> str:
     padded_str = ''

@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
@@ -10,10 +12,10 @@ from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import
 from ChessEngine.src.Root.PreCalculationsData import square_bitmask
 
 
-def get_bishop_moves(move_model: GameState) -> list[int]:
+def get_bishop_moves(move_model: GameState) -> List[int]:
     bishop: int = (move_model.fen.white_pieces if move_model.player_attr.player_side == PlayerSide.WHITE else
                    move_model.fen.black_pieces)[PieceName.BISHOP.value]
-    bishop_moves: list[int] = []
+    bishop_moves: List[int] = []
     while bishop:
         bishop_position: Positions = Positions(get_least_bit_index(bishop))
         bishop_mask = square_bitmask[bishop_position.value]

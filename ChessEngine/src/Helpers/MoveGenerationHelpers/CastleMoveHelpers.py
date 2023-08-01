@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
 from ChessEngine.src.Enums.PositionsEnum import Positions
@@ -8,7 +10,7 @@ from ChessEngine.src.Root.PreCalculationsData import pawn_attack_maps, knight_at
     king_attack_maps
 
 
-def squares_are_attacked(squares: int, opponent_pieces: list[int], side: PlayerSide, board_state: int) -> bool:
+def squares_are_attacked(squares: int, opponent_pieces: List[int], side: PlayerSide, board_state: int) -> bool:
     while squares:
         position: Positions = Positions(get_least_bit_index(squares))
         pawn_attack: int = pawn_attack_maps[side.value][position.value]

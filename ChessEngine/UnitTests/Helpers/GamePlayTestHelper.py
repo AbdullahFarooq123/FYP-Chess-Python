@@ -1,10 +1,11 @@
 import os
 import re
+from typing import List
 
 
-def get_test_games() -> list[dict]:
+def get_test_games() -> List[dict]:
     pgn_data: str = __load_pgn()
-    games: list[dict] = __parse_pgn(pgn_data)
+    games: List[dict] = __parse_pgn(pgn_data)
     return games
 
 
@@ -17,13 +18,13 @@ def __load_pgn() -> str:
         return ''
 
 
-def __parse_pgn(pgn_str: str) -> list[dict]:
+def __parse_pgn(pgn_str: str) -> List[dict]:
     regular_exp: str = r'\[[^\]]*\]'
-    games: list[dict] = []
+    games: List[dict] = []
     # pgn_str: str = re.sub(regular_exp, '', pgn_str)
-    pgn_list: list[str] = pgn_str.split('\n')
-    end_games: list[str] = ['1-0', '0-1', '1/2-1/2']
-    single_game: list[str] = []
+    pgn_list: List[str] = pgn_str.split('\n')
+    end_games: List[str] = ['1-0', '0-1', '1/2-1/2']
+    single_game: List[str] = []
     details: dict = {}
     for pgn_line in pgn_list:
         if len(pgn_line) == 0:
@@ -33,7 +34,7 @@ def __parse_pgn(pgn_str: str) -> list[dict]:
             details_line = pgn_line.split('"')
             details[details_line[0].strip()] = details_line[1].strip()
             continue
-        moves: list[str] = pgn_line.split(' ')
+        moves: List[str] = pgn_line.split(' ')
         for move in moves:
             if len(move) == 0:
                 continue

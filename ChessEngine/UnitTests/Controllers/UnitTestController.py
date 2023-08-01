@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.UnitTests.Enums.TestOfEnum import TestsOf
 from ChessEngine.UnitTests.Models.UnitTestSectionModel import UTestSectionModel
 from ChessEngine.UnitTests.Services import MoveGenerationTestService, PreCalculationTestService
@@ -7,7 +9,7 @@ class UnitTestEngine:
     def __init__(self, print_test_cases: TestsOf = TestsOf.NONE,
                  print_test_case_details: TestsOf = TestsOf.NONE,
                  show_only_tests: TestsOf = TestsOf.ALL):
-        self.test_results: list[UTestSectionModel] = []
+        self.test_results: List[UTestSectionModel] = []
         self.print_test_cases = print_test_cases
         self.print_test_case_details = print_test_case_details
         self.show_only_tests = show_only_tests

@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Helpers.FenHelpers.FenDecryptHelpers import decrypt_fen
 from ChessEngine.src.Models.FenModel import Fen
 from ChessEngine.src.Helpers.GenerateMoveHelpers.Knight import get_knight_moves
@@ -18,7 +20,7 @@ def run_knight_moves_tests() -> UTestSectionModel:
 
 
 def knight_moves_length_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, (fen, tested_values) in enumerate(knight_move_generation.items()):
         fen_model: Fen = decrypt_fen(fen)
         move_model = GameState(fen_model)
@@ -30,7 +32,7 @@ def knight_moves_length_tests() -> UTestDataModel:
 
 
 def knight_moves_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     index: int = 1
     for fen, tested_values in knight_move_generation.items():
         fen_model: Fen = decrypt_fen(fen)

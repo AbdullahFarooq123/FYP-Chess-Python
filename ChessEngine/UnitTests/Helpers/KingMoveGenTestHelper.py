@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.UnitTests.TestData.KingTestData import king_attacks
 from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import get_binary
 from ChessEngine.src.Enums.PositionsEnum import Positions
@@ -17,7 +19,7 @@ def run_king_tests() -> UTestSectionModel:
 
 
 def king_attacks_generation_test() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_king_attack_mask = get_binary(get_king_attack(position.value))
         tested_king_attack_mask = flatten_position(king_attacks[position.name])
@@ -27,7 +29,7 @@ def king_attacks_generation_test() -> UTestDataModel:
 
 
 def king_attacks_generated_test() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, position in enumerate(list(Positions)[:-1]):
         calculated_king_attack_mask = get_binary(king_attack_maps[position.value])
         tested_king_attack_mask = flatten_position(king_attacks[position.name])

@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.UnitTests.TestData.PawnTestData import pawn_attacks
 from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import get_binary
 from ChessEngine.src.Enums.PositionsEnum import Positions
@@ -18,7 +20,7 @@ def run_pawn_tests() -> UTestSectionModel:
 
 
 def pawn_attacks_generation_test() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     case_id = 0
     for player_side in list(PlayerSide)[:-1]:
         for position in list(Positions)[:-1]:
@@ -31,7 +33,7 @@ def pawn_attacks_generation_test() -> UTestDataModel:
 
 
 def pawn_attacks_generated_test() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     case_id = 0
     for player_side in list(PlayerSide)[:-1]:
         for position in list(Positions)[:-1]:

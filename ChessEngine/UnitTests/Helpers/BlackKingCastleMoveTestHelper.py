@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.UnitTests.TestData.KingTestData import black_king_castle
 from ChessEngine.src.Helpers.FenHelpers.FenDecryptHelpers import decrypt_fen
 from ChessEngine.src.Models.FenModel import Fen
@@ -11,7 +13,7 @@ from ChessEngine.UnitTests.Models.UnitTestModel import UnitTest
 
 
 def black_king_castle_moves_length_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, (fen, tested_values) in enumerate(black_king_castle.items()):
         fen_model: Fen = decrypt_fen(fen)
         move_model = GameState(fen_model)

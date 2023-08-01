@@ -1,20 +1,21 @@
-from ChessEngine.src.Enums.PositionsEnum import Positions
+from typing import List
+
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
-from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import print_bitboard
+from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Helpers.MoveEncryptionHelpers.EncodeMoveHelpers import encode_move
 from ChessEngine.src.Helpers.MoveGenerationHelpers.OpponentMoveHelpers import \
     is_sliding_piece
-from ChessEngine.src.Models.GameStateModel import GameState
-from ChessEngine.src.Helpers.PreCalculationHelpers.QueenPreCalHelpers import get_queen_attacks
 from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import get_least_bit_index, unsigned
+from ChessEngine.src.Helpers.PreCalculationHelpers.QueenPreCalHelpers import get_queen_attacks
+from ChessEngine.src.Models.GameStateModel import GameState
 from ChessEngine.src.Root.PreCalculationsData import square_bitmask
 
-print_bitboard
-def get_queen_moves(move_model: GameState) -> list[int]:
+
+def get_queen_moves(move_model: GameState) -> List[int]:
     queen: int = (move_model.fen.white_pieces if move_model.player_attr.player_side == PlayerSide.WHITE else
                   move_model.fen.black_pieces)[PieceName.QUEEN.value]
-    queen_moves: list[int] = []
+    queen_moves: List[int] = []
     while queen:
         queen_position: Positions = Positions(get_least_bit_index(queen))
         queen_mask = square_bitmask[queen_position.value]

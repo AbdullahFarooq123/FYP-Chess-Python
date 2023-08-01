@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
@@ -9,10 +11,10 @@ from ChessEngine.src.Models.GameStateModel import GameState
 from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import get_least_bit_index
 
 
-def get_black_castle_moves(move_model: GameState) -> list[int]:
+def get_black_castle_moves(move_model: GameState) -> List[int]:
     black_king: int = move_model.fen.black_pieces[PieceName.KING.value]
     black_king_position: Positions = Positions(get_least_bit_index(black_king))
-    castle_moves: list[int] = []
+    castle_moves: List[int] = []
     board_state: int = move_model.fen.game_board
     if move_model.black_castle.can_castle() and move_model.attack_on_king_attr.check_count == 0:
         if move_model.black_castle.can_queen_side_castle() and not squares_are_attacked(

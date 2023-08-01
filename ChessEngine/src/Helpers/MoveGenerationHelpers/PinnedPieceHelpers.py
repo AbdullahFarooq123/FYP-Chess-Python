@@ -1,23 +1,22 @@
+from typing import List
+
 from ChessEngine.src.Enums.DirectionsEnum import \
     Direction
-from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
-from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import print_bitboard
+from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Helpers.MoveGenerationHelpers.OpponentMoveHelpers import \
     get_alignment_wrt_each_other
 from ChessEngine.src.Helpers.PreCalculationHelpers.BishopPreCalHelpers import get_bishop_attacks
+from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import get_least_bit_index, unsigned
 from ChessEngine.src.Helpers.PreCalculationHelpers.QueenPreCalHelpers import get_queen_attacks
 from ChessEngine.src.Helpers.PreCalculationHelpers.RookPreCalHelpers import get_rook_attacks
 from ChessEngine.src.Models.PinnedPieceModel import PinnedPiece
 from ChessEngine.src.Models.RelativeDirectionModel import RelativeDirection
-from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import get_least_bit_index, unsigned
 from ChessEngine.src.Root.PreCalculationsData import directional_rays, square_bitmask
 
-print_bitboard
 
-
-def get_pinned_pieces(king_rays: int, player_pieces: list[int], king_position: Positions,
-                      opponent_sliding_pieces_list: list[int], board_state: int, player_state: int,
+def get_pinned_pieces(king_rays: int, player_pieces: List[int], king_position: Positions,
+                      opponent_sliding_pieces_list: List[int], board_state: int, player_state: int,
                       opponent_state: int) -> PinnedPiece:
     pinned_piece_model: PinnedPiece = PinnedPiece()
     for player_piece_name in list(PieceName)[:-1]:

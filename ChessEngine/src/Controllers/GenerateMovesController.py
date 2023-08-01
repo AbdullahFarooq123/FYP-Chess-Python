@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
 from ChessEngine.src.Models.FenModel import Fen
 from ChessEngine.src.Helpers.GenerateMoveHelpers.BlackCastle import \
@@ -14,14 +16,14 @@ from ChessEngine.src.Helpers.GenerateMoveHelpers.Rook import get_rook_moves
 from ChessEngine.src.Models.GameStateModel import GameState
 
 
-def get_moves_by_fen(fen: Fen) -> list[int]:
+def get_moves_by_fen(fen: Fen) -> List[int]:
     move_model: GameState = GameState(fen)
     return get_moves_by_game_state(move_model=move_model)
 
 
-def get_moves_by_game_state(move_model: GameState) -> list[int]:
-    # moves list
-    player_moves: list[int] = []
+def get_moves_by_game_state(move_model: GameState) -> List[int]:
+    # moves List
+    player_moves: List[int] = []
     turn: PlayerSide = move_model.player_attr.player_side
     check_count: int = move_model.attack_on_king_attr.check_count
     if check_count < 2:

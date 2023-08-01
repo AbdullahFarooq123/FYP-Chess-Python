@@ -48,20 +48,20 @@ def run_testing():
     #     prediction = trained_model.predict([board, features])
     #     print(f'{fen} : {prediction}')
     import chess
-    import chess.engine
-
-    engine = chess.engine.SimpleEngine.popen_uci(
-        "C:\\Users\\Dev\\Downloads\\stockfish-windows-x86-64-avx2\\stockfish\\stockfish-windows-x86-64-avx2.exe")
-
-    while True:
-        fen = input('Please enter fen : ')
-        board = chess.Board(fen)
-        info = engine.analyse(board, chess.engine.Limit(depth=22))
-        score = info['score'].replace('PovScore', '').replace('(', '').replace(')')
-        print(info['score'])
-    # Score: PovScore(Mate(+1), WHITE)
-
-    engine.quit()
+    # import chess.engine
+    #
+    # engine = chess.engine.SimpleEngine.popen_uci(
+    #     "C:\\Users\\Dev\\Downloads\\stockfish-windows-x86-64-avx2\\stockfish\\stockfish-windows-x86-64-avx2.exe")
+    #
+    # while True:
+    #     fen = input('Please enter fen : ')
+    #     board = chess.Board(fen)
+    #     info = engine.analyse(board, chess.engine.Limit(depth=22))
+    #     score = info['score'].replace('PovScore', '').replace('(', '').replace(')')
+    #     print(info['score'])
+    # # Score: PovScore(Mate(+1), WHITE)
+    #
+    # engine.quit()
 
 
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Helpers.FenHelpers.FenDecryptHelpers import decrypt_fen
 from ChessEngine.src.Models.FenModel import Fen
 from ChessEngine.src.Helpers.GenerateMoveHelpers.Bishop import get_bishop_moves
@@ -18,7 +20,7 @@ def run_bishop_moves_tests() -> UTestSectionModel:
 
 
 def bishop_moves_length_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     for index, (fen, tested_values) in enumerate(bishop_move_generations.items()):
         fen_model: Fen = decrypt_fen(fen)
         move_model = GameState(fen_model)
@@ -30,7 +32,7 @@ def bishop_moves_length_tests() -> UTestDataModel:
 
 
 def bishop_moves_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     index: int = 1
     for fen, tested_values in bishop_move_generations.items():
         fen_model: Fen = decrypt_fen(fen)

@@ -1,6 +1,7 @@
 import numpy as np
 
-from NeuralNetworks.StockFish import StockFishEngine
+from typing import List
+
 from ChessEngine.src.Controllers.GenerateMovesController import get_moves_by_game_state
 from ChessEngine.src.Helpers.FenHelpers.FenEncryptHelpers import encrypt_fen
 from ChessEngine.src.Helpers.GameEngineHelpers.MakeMoveHelper import make_move
@@ -8,17 +9,16 @@ from ChessEngine.src.Models.GameStateModel import GameState
 
 
 class MCTSNode:
-    stock_fish_engine = StockFishEngine()
 
     def __init__(self, state: GameState, parent=None):
         self.game_state: GameState = state
         self.parent: MCTSNode = parent
-        self.children: list[MCTSNode] = []
+        self.children: List[MCTSNode] = []
         self.visits: int = 0
         self.score: int = 0
 
     def expand(self):
-        legal_moves: list[int] = get_moves_by_game_state(self.game_state)
+        legal_moves: List[int] = get_moves_by_game_state(self.game_state)
         for move in legal_moves:
             child_state = self.game_state.copy()
             child_state.push(move)
@@ -37,7 +37,7 @@ class MCTSNode:
             random_move = np.random.choice([move for move in legal_moves])
             make_move(random_move, sim_state)
         fen_string:str = encrypt_fen(fen=sim_state.fen)
-        return s
+        return fen_string
 
     def back_propagate(self, result):
         self.visits += 1

@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Helpers.BeautifyHelpers.StringBeautifyHelpers import bool_to_str
 from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
@@ -17,12 +19,12 @@ class Encryption:
         self.castle_flag = castle_flag
 
     @staticmethod
-    def get_str_attr() -> list[str]:
+    def get_str_attr() -> List[str]:
         return ['PIECE NAME', 'SOURCE SQ.', 'TARGET SQ.', 'DOUBLE PUSH', 'ENPASSANT', 'CAPTURE', 'CASTLE',
                 'PROMOTION PIECE',
                 'MOVE NAME']
 
-    def get_value_list(self) -> list[str]:
+    def get_value_list(self) -> List[str]:
         return [self.piece_name.name, self.source_square.name, self.target_square.name,
                 bool_to_str(self.double_push_flag),
                 bool_to_str(self.enpassant_flag),

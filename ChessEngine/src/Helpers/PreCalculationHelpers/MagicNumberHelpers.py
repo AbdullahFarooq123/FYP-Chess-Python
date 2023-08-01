@@ -10,6 +10,8 @@ from ChessEngine.src.Helpers.PreCalculationHelpers.RookPreCalHelpers import \
 
 from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import bitmask, count_set_bits, unsigned
 
+from ChessEngine.src.Root.PreCalculationsData import rook_attack_count, bishop_attack_count
+
 
 def init_magic_numbers():
     rook_magic_number = [0 for _ in list(Positions)[:-1]]

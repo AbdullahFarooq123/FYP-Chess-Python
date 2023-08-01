@@ -1,3 +1,5 @@
+from typing import Union, List, Tuple
+
 from pandas import Series
 
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
@@ -10,7 +12,7 @@ from ChessEngine.src.Models.FenModel import Fen
 from ChessEngine.src.Models.PlayerModel import Player
 
 
-def get_feature_vector(fen: str | Series) -> list[int]:
+def get_feature_vector(fen: Union[str, Series]) -> List[int]:
     if type(fen) is Series and 'FEN' in fen:
         fen = fen['FEN']
     eval_fen: str = fen
@@ -30,10 +32,10 @@ def get_feature_vector(fen: str | Series) -> list[int]:
         player_king_position=current_player.get_piece_position(PieceName.KING))
     white_in_check: int = int(fen.player_turn is PlayerSide.WHITE and attack_on_king_attr.check_count > 0)
     black_in_check: int = int(fen.player_turn is PlayerSide.BLACK and attack_on_king_attr.check_count > 0)
-    white_features: list[int] = [white_king_side_castle, white_queen_side_castle, white_in_check]
-    black_features: list[int] = [black_king_side_castle, black_queen_side_castle, black_in_check]
-    eval_fen: tuple[int] = fen_to_eval(str_fen=eval_fen)
-    lst_eval: list[int] = list(eval_fen)
+    white_features: List[int] = [white_king_side_castle, white_queen_side_castle, white_in_check]
+    black_features: List[int] = [black_king_side_castle, black_queen_side_castle, black_in_check]
+    eval_fen: Tuple[int] = fen_to_eval(str_fen=eval_fen)
+    lst_eval: List[int] = list(eval_fen)
     # if fen.player_turn is PlayerSide.BLACK:
     #     lst_eval: list[int] = [elem * -1 for elem in lst_eval[::-1]]
     #     white_features, black_features = black_features, white_features
@@ -41,7 +43,7 @@ def get_feature_vector(fen: str | Series) -> list[int]:
     return input_features
 
 
-def fen_to_eval(str_fen: str) -> tuple[int]:
+def fen_to_eval(str_fen: str) -> Tuple[int]:
     str_fen = str_fen.split(' ')[0]
     str_fen = ''.join(',0' * int(char) if char.isdigit() else char for char in str_fen)
     str_fen = str_fen.replace('/', '')

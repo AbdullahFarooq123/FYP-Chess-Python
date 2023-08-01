@@ -1,4 +1,5 @@
 import re
+from typing import Optional, List
 
 from ChessEngine.src.Helpers.BeautifyHelpers.GameBeautifyHelpers import white_pieces_char
 from ChessEngine.src.Enums.PositionsEnum import Positions
@@ -9,7 +10,7 @@ from ChessEngine.src.Helpers.MoveEncryptionHelpers.DecodeMoveHelpers import deco
 from ChessEngine.src.Models.PGNModel import PGNModel
 
 
-def parse_user_move(move: str, player_turn: PlayerSide) -> PGNModel | None:
+def parse_user_move(move: str, player_turn: PlayerSide) -> Optional[PGNModel]:
     piece_name: PieceName = PieceName.NONE
     source_square: Positions = Positions.OUT_OF_BOUNDS
     target_square: Positions = Positions.OUT_OF_BOUNDS
@@ -69,7 +70,7 @@ def parse_user_move(move: str, player_turn: PlayerSide) -> PGNModel | None:
                     castle_flag=False)
 
 
-def find_pgn_move_in_move_list(pgn_move: PGNModel, move_list: list[int]) -> int:
+def find_pgn_move_in_move_list(pgn_move: PGNModel, move_list: List[int]) -> int:
     for move in move_list:
         decrypted_move: Encryption = decode_move_all(move)
         if pgn_move.piece_name is decrypted_move.piece_name:
@@ -102,7 +103,7 @@ def parse_pgn(pgn: str):
     return move_list
 
 
-def find_move(move_list: list[int], pgn_move: PGNModel) -> int:
+def find_move(move_list: List[int], pgn_move: PGNModel) -> int:
     for move in move_list:
         move_model: Encryption = decode_move_all(move=move)
         if move_model.piece_name is pgn_move.piece_name:

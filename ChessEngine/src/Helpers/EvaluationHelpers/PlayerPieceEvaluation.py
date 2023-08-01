@@ -1,9 +1,11 @@
+from typing import List
+
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import count_set_bits
 from ChessEngine.src.Root.Const import piece_scores
 
 
-def get_piece_score(piece_list: list[int]) -> int:
+def get_piece_score(piece_list: List[int]) -> int:
     player_piece_score = 0
     for piece_name in list(PieceName)[:-1]:
         player_piece_bitmask = piece_list[piece_name.value]

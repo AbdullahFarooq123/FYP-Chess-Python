@@ -1,3 +1,5 @@
+from typing import List
+
 from ChessEngine.src.Enums.PositionsEnum import Positions
 from ChessEngine.src.Enums.PieceNameEnum import PieceName
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
@@ -14,7 +16,7 @@ def make_move(move: int, game_state_model: GameState):
     decrypted_move: Encryption = decode_move_all(move=move)
     # Variables
     piece_to_move: PieceName = decrypted_move.piece_name
-    player_pieces: list[int] = game_state_model.player_attr.player_pieces
+    player_pieces: List[int] = game_state_model.player_attr.player_pieces
     promotion_piece: PieceName = decrypted_move.promotion_piece_name
     piece_transform_to: PieceName = (promotion_piece if promotion_piece != PieceName.NONE else piece_to_move)
 
@@ -32,7 +34,6 @@ def make_move(move: int, game_state_model: GameState):
     elif decrypted_move.castle_flag:
         __make_castle_move(game_state_model=game_state_model, decrypted_moves=decrypted_move)
 
-
     # Reset game state
     game_state_model.recalculate(change_turn=True)
 
@@ -43,10 +44,10 @@ def __make_capture_move(game_state_model: GameState, decrypted_moves: Encryption
     target_bitmask: int = square_bitmask[target_position.value]
     player_turn: PlayerSide = game_state_model.fen.player_turn
     opponent_state: int = game_state_model.fen.black_board if player_turn is PlayerSide.WHITE else game_state_model.fen.white_board
-    opponent_pieces: list[
+    opponent_pieces: List[
         int] = game_state_model.fen.black_pieces if player_turn is PlayerSide.WHITE else game_state_model.fen.white_pieces
     board_state: int = game_state_model.fen.game_board
-    opponent_search_space: list[int] = opponent_pieces
+    opponent_search_space: List[int] = opponent_pieces
     # For enpassant move (a type of capture move)
     if decrypted_moves.enpassant_flag:
         # If player side is white then the opponent will be located beneath the target square,
@@ -156,7 +157,7 @@ def __perform_movement_on_board_states(game_state_model: GameState, decrypted_mo
     source_square: Positions = decrypted_moves.source_square
     target_square: Positions = decrypted_moves.target_square
     game_board: int = game_state_model.fen.game_board
-    player_pieces: list[
+    player_pieces: List[
         int] = game_state_model.fen.white_pieces if player_side is PlayerSide.WHITE else game_state_model.fen.black_pieces
 
     # Change player state
