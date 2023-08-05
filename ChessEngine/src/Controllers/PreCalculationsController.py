@@ -10,10 +10,14 @@ from ChessEngine.src.Helpers.PreCalculationHelpers.KingPreCalHelpers import init
 from ChessEngine.src.Helpers.PreCalculationHelpers.KnightPreCalHelpers import init_knight_attacks
 from ChessEngine.src.Helpers.PreCalculationHelpers.MagicNumberHelpers import init_magic_numbers
 from ChessEngine.src.Helpers.PreCalculationHelpers.PawnPreCalHelpers import init_pawn_attacks
-from ChessEngine.src.Helpers.PreCalculationHelpers.RookPreCalHelpers import init_rook_attack_count, init_rook_attack_mask_exc_ends
+from ChessEngine.src.Helpers.PreCalculationHelpers.RookPreCalHelpers import init_rook_attack_count, \
+    init_rook_attack_mask_exc_ends
 from ChessEngine.src.Helpers.PreCalculationHelpers.SliderAttackHelpers import \
     init_slider_attacks
 from ChessEngine.src.Root.Const import static_files_loc
+from ChessEngine.src.Root.PreCalculationsData import square_bitmask, directional_rays, pawn_attack_maps, \
+    king_attack_maps, knight_attack_maps, rook_attack_count, rook_attacks, bishop_attack_count, bishop_attacks, \
+    bishop_magic_number, rook_magic_number
 
 
 def init_migrations():

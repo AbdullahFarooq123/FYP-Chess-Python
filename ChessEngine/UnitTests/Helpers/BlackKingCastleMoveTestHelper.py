@@ -25,7 +25,7 @@ def black_king_castle_moves_length_tests() -> UTestDataModel:
 
 
 def black_king_castle_moves_generation_tests() -> UTestDataModel:
-    unit_tests: list[UnitTest] = []
+    unit_tests: List[UnitTest] = []
     index: int = 1
     for fen, tested_values in black_king_castle.items():
         fen_model: Fen = decrypt_fen(fen)

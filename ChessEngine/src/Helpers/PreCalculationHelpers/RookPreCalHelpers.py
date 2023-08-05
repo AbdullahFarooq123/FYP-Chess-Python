@@ -3,8 +3,8 @@ from ctypes import c_uint64, c_uint32
 from ChessEngine.src.Enums.DirectionsEnum import \
     Direction
 from ChessEngine.src.Enums.PositionsEnum import Positions
-from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import count_set_bits, bitmask, move_bit_by_direction, \
-    unsigned
+from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import count_set_bits, bitmask, \
+    move_bit_by_direction, unsigned
 from ChessEngine.src.Helpers.PreCalculationHelpers.SetOccupancyHelpers import set_occupancy
 from ChessEngine.src.Root.Const import right_edge, left_edge, top_edge, bottom_edge
 from ChessEngine.src.Root.PreCalculationsData import rook_attack_count, rook_magic_number, \
