@@ -48,8 +48,9 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-*.ipynb
 *.csv
-TraininLogs
+TrainingLogs
 *.zip
 *.keras
+DataSet
+.idea

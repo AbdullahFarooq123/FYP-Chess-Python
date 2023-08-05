@@ -1,7 +1,7 @@
+import math
+
 from keras import Model
 from tensorflow import keras
-
-from NeuralNetworks.PositionEvaluatorCNN import Config
 
 
 def configure_neural_network(model_path: str) -> Model:
@@ -10,35 +10,29 @@ def configure_neural_network(model_path: str) -> Model:
         print('Loaded existing model!')
     except OSError:
         print('No model found. Creating new model.')
-        board_feature_input = keras.layers.Input(shape=Config.board_feature_input_shape)
-        reshape_board_feature = keras.layers.Reshape(target_shape=(8, 8, 1))(board_feature_input)
-        conv_layer_1 = keras.layers.Conv2D(kernel_size=(8, 8), padding="same", activation="relu",
-                                           filters=Config.filter_count,
-                                           input_shape=(8, 8, 1))(reshape_board_feature)
-        normalization_layer_1 = keras.layers.BatchNormalization(axis=-1, momentum=0.99, epsilon=1e-05)(conv_layer_1)
-        conv_layer_2 = keras.layers.Conv2D(kernel_size=(8, 8), padding="same", activation="relu",
-                                           filters=Config.filter_count,
-                                           input_shape=(8, 8, 1))(normalization_layer_1)
-        normalization_layer_2 = keras.layers.BatchNormalization(axis=-1, momentum=0.99, epsilon=1e-05)(conv_layer_2)
-        input_for_dense = keras.layers.Flatten()(normalization_layer_2)
-        player_feature_input = keras.layers.Input(shape=Config.player_feature_input_shape)
 
-        dense_layer_input = keras.layers.concatenate([input_for_dense, player_feature_input])
+        board_features_input = keras.layers.Input(shape=InputConfig.board_features_input_shape)
+        board_features_input = keras.layers.Reshape(target_shape=InputConfig.board_features_reshape)(
+            board_features_input)
 
-        dense_layer_1 = keras.layers.Dense(1024, activation='relu')(dense_layer_input)
-        dense_layer_2 = keras.layers.Dense(512, activation='relu')(dense_layer_1)
-        dense_layer_3 = keras.layers.Dense(256, activation='relu')(dense_layer_2)
-        dense_layer_4 = keras.layers.Dense(256, activation='relu')(dense_layer_3)
+        conv_2d = __make_conv2d_for_board_features(board_features_input)
 
-        output_layer = keras.layers.Dense(1, activation='linear')(dense_layer_4)
+        processed_board_feature_input = keras.layers.Flatten()(conv_2d)
 
-        data_model = keras.models.Model(inputs=[board_feature_input, player_feature_input], outputs=output_layer,
-                                        name='Position_Evaluator')
+        game_feature_input = keras.layers.Input(shape=InputConfig.game_features_input_shape)
 
-    metrics = [keras.metrics.MeanAbsoluteError(), keras.metrics.SparseCategoricalAccuracy(), keras.metrics.Accuracy(),
-               keras.metrics.CategoricalAccuracy(), keras.metrics.BinaryAccuracy()]
+        dense_layer_input = keras.layers.concatenate([processed_board_feature_input, game_feature_input])
 
-    optimizer = keras.optimizers.Adam()
+        dense_layer = __make_dense_layers(dense_layer_input)
+
+        output_layer = keras.layers.Dense(1, activation='linear')(dense_layer)
+
+        data_model = keras.models.Model(inputs=[board_features_input, game_feature_input], outputs=output_layer,
+                                        name='PositionEvaluator')
+
+    metrics = [keras.metrics.MeanAbsoluteError(), keras.metrics.MeanSquaredError()]
+
+    optimizer = keras.optimizers.Adam(learning_rate=0.001)
 
     loss_function = keras.losses.MeanSquaredError()
 
@@ -47,3 +41,60 @@ def configure_neural_network(model_path: str) -> Model:
                        metrics=metrics)
 
     return data_model
+
+
+def __make_conv2d_for_board_features(input_layer: keras.layers.Input):
+    for i in range(1, Conv2dConfig.conv_2d_layer_count + 1):
+        conv_layer = keras.layers.Conv2D(kernel_size=Conv2dConfig.conv_2d_kernel_size, padding='same',
+                                         activation='relu',
+                                         filters=Conv2dConfig.conv_2d_filter_count)(input_layer)
+        conv_normalizer = keras.layers.BatchNormalization(axis=-1, momentum=0.99, epsilon=1e-05)(conv_layer)
+        input_layer = conv_normalizer
+        Conv2dConfig.conv_2d_kernel_size = tuple(int(v / 2) for v in Conv2dConfig.conv_2d_kernel_size)
+        Conv2dConfig.conv_2d_filter_count *= 2
+    return input_layer
+
+
+def __make_dense_layers(input_layer):
+    threshold_values = abs(DenseConfig.dense_layer_count - DenseConfig.unit_step_count)
+    for i in range(1, DenseConfig.dense_layer_count + 1):
+        dense_layer = keras.layers.Dense(units=DenseConfig.dense_layer_units, activation='relu')(input_layer)
+        input_layer = dense_layer
+        if (DenseConfig.upper_threshold and i < threshold_values) or (
+                DenseConfig.lower_threshold and i > DenseConfig.unit_step_count):
+            continue
+        DenseConfig.dense_layer_units /= 2
+    return input_layer
+
+
+class GameConfig:
+    board_squares: int = 64
+    unique_pieces: int = 6
+    no_of_players: int = 2
+    unique_castle_rights: int = 2
+    enpassant_square_size: int = board_squares
+
+
+class InputConfig:
+    board_features_input_shape: tuple = (GameConfig.board_squares, GameConfig.unique_pieces * GameConfig.no_of_players)
+    board_features_reshape: tuple = board_features_input_shape + (1,)
+    game_features_input_shape: tuple = (
+        GameConfig.no_of_players + (
+                GameConfig.no_of_players * GameConfig.unique_castle_rights) + GameConfig.enpassant_square_size + 1 + 1,)
+
+
+class Conv2dConfig:
+    conv_2d_kernel_size: tuple = (8, 8)
+    conv_2d_filter_count: int = 16
+    conv_2d_layer_count: int = 3
+
+
+class DenseConfig:
+    dense_layer_count: int = 5
+    min_dense_layer_units: int = 64
+    max_dense_layer_units: int = 512
+    __dense_layer_units: int = min_dense_layer_units * (2 ** (dense_layer_count - 1))
+    upper_threshold: bool = True
+    lower_threshold: bool = not upper_threshold
+    dense_layer_units = __dense_layer_units if __dense_layer_units <= max_dense_layer_units else max_dense_layer_units
+    unit_step_count: int = math.log2(max_dense_layer_units / min_dense_layer_units)

@@ -15,7 +15,31 @@ from ChessEngine.src.Models.PlayerModel import Player
 def get_feature_vector(fen: Union[str, Series]) -> List[int]:
     if type(fen) is Series and 'FEN' in fen:
         fen = fen['FEN']
-    eval_fen: str = fen
+    board_state = fen.split(' ')[0]
+    one_hot_dict = {'.': 0,
+                    'p': 1,
+                    'n': 2,
+                    'b': 4,
+                    'r': 8,
+                    'q': 16,
+                    'k': 32,
+                    'P': 64,
+                    'N': 128,
+                    'B': 256,
+                    'R': 512,
+                    'Q': 1024,
+                    'K': 2048}
+    board_state: str = board_state.replace('/', '')
+    board_state: str = ''.join('.' * int(char) if char.isdigit() else char for char in board_state)
+    return [convert_to_bin_array(one_hot_dict[square]) for square in board_state]
+
+
+def convert_to_bin_array(number: int):
+    return [int(_) for _ in '{:012b}'.format(number)]
+
+
+def extract_player_features(fen: str):
+    pad: list[int] = [0 for _ in range(6)]
     fen: Fen = decrypt_fen(fen=fen)
     white_castle: Castle = Castle(castle_rights=fen.white_castle)
     black_castle: Castle = Castle(castle_rights=fen.black_castle)
@@ -32,33 +56,6 @@ def get_feature_vector(fen: Union[str, Series]) -> List[int]:
         player_king_position=current_player.get_piece_position(PieceName.KING))
     white_in_check: int = int(fen.player_turn is PlayerSide.WHITE and attack_on_king_attr.check_count > 0)
     black_in_check: int = int(fen.player_turn is PlayerSide.BLACK and attack_on_king_attr.check_count > 0)
-    white_features: List[int] = [white_king_side_castle, white_queen_side_castle, white_in_check]
-    black_features: List[int] = [black_king_side_castle, black_queen_side_castle, black_in_check]
-    eval_fen: Tuple[int] = fen_to_eval(str_fen=eval_fen)
-    lst_eval: List[int] = list(eval_fen)
-    # if fen.player_turn is PlayerSide.BLACK:
-    #     lst_eval: list[int] = [elem * -1 for elem in lst_eval[::-1]]
-    #     white_features, black_features = black_features, white_features
-    input_features = white_features + black_features + lst_eval
-    return input_features
-
-
-def fen_to_eval(str_fen: str) -> Tuple[int]:
-    str_fen = str_fen.split(' ')[0]
-    str_fen = ''.join(',0' * int(char) if char.isdigit() else char for char in str_fen)
-    str_fen = str_fen.replace('/', '')
-    str_fen = str_fen.replace("p", ",-1")
-    str_fen = str_fen.replace("n", ",-3")
-    str_fen = str_fen.replace("b", ",-4")
-    str_fen = str_fen.replace("r", ",-5")
-    str_fen = str_fen.replace("q", ",-9")
-    str_fen = str_fen.replace("k", ",-100")
-    str_fen = str_fen.replace("P", ",1")
-    str_fen = str_fen.replace("N", ",3")
-    str_fen = str_fen.replace("B", ",4")
-    str_fen = str_fen.replace("R", ",5")
-    str_fen = str_fen.replace("Q", ",9")
-    str_fen = str_fen.replace("K", ",100")
-    str_fen = str_fen[1:]
-    str_fen = eval(str_fen)
-    return str_fen
+    white_features: list[int] = [white_king_side_castle, white_queen_side_castle, white_in_check]
+    black_features: list[int] = [black_king_side_castle, black_queen_side_castle, black_in_check]
+    return white_features + black_features + pad
