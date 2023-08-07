@@ -86,7 +86,7 @@ class InputConfig:
 class Conv2dConfig:
     conv_2d_kernel_size: tuple = (8, 8)
     conv_2d_filter_count: int = 16
-    conv_2d_layer_count: int = 4
+    conv_2d_layer_count: int = 3
 
 
 class DenseConfig:
