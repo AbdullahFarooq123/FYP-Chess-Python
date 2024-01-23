@@ -1,7 +1,8 @@
 from ChessEngine.src.Enums.DirectionsEnum import \
     Direction
 from ChessEngine.src.Enums.PositionsEnum import Positions
-from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import move_bit_by_position
+from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import move_bit_by_position, \
+    move_bit_by_direction
 from ChessEngine.src.Root.PreCalculationsData import square_bitmask
 
 
@@ -23,6 +24,6 @@ def get_ray_wrt_pos_dir(direction: Direction, position: Positions):
     my_position = square_bitmask[position.value]
     ray = 0
     while my_position:
-        my_position = move_bit_by_position(my_position, direction)
+        my_position = move_bit_by_direction(my_position, direction)
         ray |= my_position
     return ray

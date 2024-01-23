@@ -2,7 +2,8 @@ from ChessEngine.src.Enums.DirectionsEnum import \
     Direction
 from ChessEngine.src.Enums.PlayerSideEnum import PlayerSide
 from ChessEngine.src.Enums.PositionsEnum import Positions
-from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import bitmask, move_bit_by_position, unsigned
+from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import bitmask, move_bit_by_position, \
+    unsigned, move_bit_by_direction
 
 
 def init_pawn_attacks():
@@ -26,5 +27,5 @@ def get_pawn_attack(side: PlayerSide, position: int) -> int:
         if side is PlayerSide.BLACK else \
         list(Direction)[4:6]
     for pos in directions:
-        attacks |= move_bit_by_position(piece_position, pos)
+        attacks |= move_bit_by_direction(piece_position, pos)
     return unsigned(attacks)

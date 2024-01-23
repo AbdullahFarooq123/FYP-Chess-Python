@@ -3,16 +3,9 @@ from ctypes import c_uint64, c_uint32
 from ChessEngine.src.Enums.DirectionsEnum import \
     Direction
 from ChessEngine.src.Enums.PositionsEnum import Positions
-from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import count_set_bits, bitmask, move_bit_by_position, \
-    unsigned
-
-
-
-
-
-
-
-
+from ChessEngine.src.Helpers.PreCalculationHelpers.BitManipulationHelpers import count_set_bits, bitmask, \
+    move_bit_by_position, \
+    unsigned, move_bit_by_direction
 
 from ChessEngine.src.Helpers.PreCalculationHelpers.SetOccupancyHelpers import set_occupancy
 from ChessEngine.src.Root.Const import right_edge, left_edge, top_edge, bottom_edge
@@ -44,7 +37,7 @@ def get_bishop_attack_mask_exc_ends(piece_position: Positions):
     directions = list(Direction)[4:8]
     piece_position = bitmask(piece_position.value)
     for direction in directions:
-        attack_bit = move_bit_by_position(piece_position, direction)
+        attack_bit = move_bit_by_direction(piece_position, direction)
         while attack_bit:
             if direction is Direction.NORTH_EAST and attack_bit & (right_edge | top_edge):
                 break
@@ -55,7 +48,7 @@ def get_bishop_attack_mask_exc_ends(piece_position: Positions):
             elif direction is Direction.SOUTH_WEST and attack_bit & (left_edge | bottom_edge):
                 break
             attack_mask |= attack_bit
-            attack_bit = move_bit_by_position(attack_bit, direction)
+            attack_bit = move_bit_by_direction(attack_bit, direction)
     return unsigned(attack_mask)
 
 
@@ -69,13 +62,13 @@ def get_bishop_attack_mask_inc_end_blockers(piece_position: Positions, blockers_
     directions = list(Direction)[4:8]
     piece_position = bitmask(piece_position.value)
     for direction in directions:
-        attack_bit = move_bit_by_position(piece_position, direction)
+        attack_bit = move_bit_by_direction(piece_position, direction)
         while attack_bit:
             # print_bitboard(attack_bit)
             attack_mask |= attack_bit
             if blockers_board & attack_bit:
                 break
-            attack_bit = move_bit_by_position(attack_bit, direction)
+            attack_bit = move_bit_by_direction(attack_bit, direction)
     return unsigned(attack_mask)
 
 
